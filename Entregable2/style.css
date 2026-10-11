@@ -1,0 +1,512 @@
+/* ======================================
+   TU PALETA DE COLORES
+   ====================================== */
+
+:root {
+    --alice-blue: #E5EBF8;
+    --icy-aqua: #BEFFEA;
+    --plum: #F4A4F5;
+    --periwinkle: #9881FF;
+    --amethyst: #A94ACF;
+
+    --fondo: #11182B;
+    --panel: #182239;
+    --texto: #E5EBF8;
+}
+
+/* ======================================
+   GENERAL
+   ====================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    padding: 36px 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--texto);
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(169, 74, 207, 0.22),
+            transparent 42%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(190, 255, 234, 0.12),
+            transparent 42%
+        ),
+        var(--fondo);
+}
+
+.contenedor {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* ======================================
+   ENCABEZADO
+   ====================================== */
+
+.encabezado {
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.etiqueta {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 8px 18px;
+
+    color: var(--icy-aqua);
+    background: rgba(190, 255, 234, 0.08);
+    border: 1px solid rgba(190, 255, 234, 0.35);
+    border-radius: 30px;
+
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+h1 {
+    margin-bottom: 12px;
+    color: var(--alice-blue);
+    font-size: clamp(25px, 3vw, 42px);
+    letter-spacing: 1px;
+}
+
+.encabezado p {
+    color: var(--alice-blue);
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.8;
+}
+
+.contador {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.contador span {
+    padding: 9px 20px;
+    color: var(--plum);
+    border: 1px solid var(--amethyst);
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* ======================================
+   CONTENEDOR DEL MAPA
+   ====================================== */
+
+.marco {
+    overflow: hidden;
+    padding: 28px 22px 20px;
+
+    background: var(--fondo);
+    border: 1px solid rgba(152, 129, 255, 0.4);
+    border-radius: 22px;
+
+    box-shadow: 0 20px 65px rgba(0, 0, 0, 0.25);
+}
+
+.contexto {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.concepto-general {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 65px;
+    padding: 14px;
+    text-align: center;
+
+    background: var(--panel);
+    border: 1px solid var(--periwinkle);
+    border-radius: 14px;
+
+    color: var(--alice-blue);
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.concepto-general.principal {
+    color: var(--alice-blue);
+    background: var(--amethyst);
+    border-color: var(--plum);
+}
+
+.instruccion {
+    margin: 22px 0 0;
+    text-align: center;
+    color: var(--alice-blue);
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.75;
+}
+
+.desplazamiento {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-color: var(--periwinkle) var(--panel);
+}
+
+#mapa {
+    display: block;
+    width: 100%;
+    min-width: 1250px;
+    height: auto;
+}
+
+/* ======================================
+   TÍTULOS DE LAS FILAS
+   ====================================== */
+
+.titulo-fila {
+    fill: var(--alice-blue);
+    font-size: 19px;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+/* ======================================
+   NODOS
+   ====================================== */
+
+.nodo {
+    cursor: pointer;
+    outline: none;
+    transition: opacity 0.2s ease;
+}
+
+.nodo rect {
+    stroke-width: 2;
+    transition:
+        stroke-width 0.2s ease,
+        filter 0.2s ease;
+}
+
+.nodo text {
+    font-size: 20px;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.nodo.intereses rect {
+    fill: var(--plum);
+    stroke: var(--amethyst);
+}
+
+.nodo.intereses text {
+    fill: var(--fondo);
+}
+
+.nodo.carreras rect {
+    fill: var(--periwinkle);
+    stroke: var(--alice-blue);
+}
+
+.nodo.carreras text {
+    fill: var(--fondo);
+}
+
+.nodo.habilidades rect {
+    fill: var(--icy-aqua);
+    stroke: var(--periwinkle);
+}
+
+.nodo.habilidades text {
+    fill: var(--fondo);
+}
+
+.nodo:hover rect,
+.nodo:focus rect,
+.nodo[aria-pressed="true"] rect {
+    stroke: var(--alice-blue);
+    stroke-width: 4;
+    filter: drop-shadow(0 0 9px rgba(229, 235, 248, 0.35));
+}
+
+/* ======================================
+   CONEXIONES
+   ====================================== */
+
+.conexion {
+    fill: none;
+    stroke-width: 2;
+    transition:
+        opacity 0.2s ease,
+        stroke-width 0.2s ease;
+}
+
+.conexion.relaciona {
+    stroke: var(--plum);
+}
+
+.conexion.requiere {
+    stroke: var(--icy-aqua);
+}
+
+.conexion.indica {
+    stroke: var(--periwinkle);
+    stroke-dasharray: 7 6;
+    opacity: 0.65;
+}
+
+/* ======================================
+   PALABRAS DE ENLACE
+   ====================================== */
+
+.etiqueta-relacion {
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.etiqueta-relacion rect {
+    fill: var(--fondo);
+    stroke-width: 1;
+}
+
+.etiqueta-relacion text {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.etiqueta-relacion.relaciona rect {
+    stroke: var(--plum);
+}
+
+.etiqueta-relacion.relaciona text {
+    fill: var(--plum);
+}
+
+.etiqueta-relacion.requiere rect {
+    stroke: var(--icy-aqua);
+}
+
+.etiqueta-relacion.requiere text {
+    fill: var(--icy-aqua);
+}
+
+.etiqueta-relacion.indica rect {
+    stroke: var(--periwinkle);
+}
+
+.etiqueta-relacion.indica text {
+    fill: var(--alice-blue);
+}
+
+/* ======================================
+   RESALTADO DE RELACIONES
+   ====================================== */
+
+#mapa.enfoque .conexion,
+#mapa.enfoque .etiqueta-relacion {
+    opacity: 0.06;
+}
+
+#mapa.enfoque .conexion.activa {
+    opacity: 1;
+    stroke-width: 3.5;
+}
+
+#mapa.enfoque .etiqueta-relacion.activa {
+    opacity: 1;
+}
+
+#mapa.enfoque .nodo {
+    opacity: 0.25;
+}
+
+#mapa.enfoque .nodo.activo {
+    opacity: 1;
+}
+
+/* ======================================
+   LEYENDA
+   ====================================== */
+
+.leyenda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 22px;
+
+    padding: 18px;
+    background: var(--panel);
+    border: 1px solid rgba(152, 129, 255, 0.3);
+    border-radius: 12px;
+}
+
+.leyenda span {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--alice-blue);
+    font-size: 13px;
+}
+
+.leyenda i {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.color-intereses {
+    background: var(--plum);
+}
+
+.color-carreras {
+    background: var(--periwinkle);
+}
+
+.color-habilidades {
+    background: var(--icy-aqua);
+}
+
+.leyenda-flecha {
+    color: var(--alice-blue);
+}
+
+/* ======================================
+   TABLA DE RELACIONES
+   ====================================== */
+
+.tabla-seccion {
+    margin-top: 30px;
+    padding: 26px;
+
+    background: var(--panel);
+    border: 1px solid rgba(152, 129, 255, 0.35);
+    border-radius: 20px;
+}
+
+.tabla-seccion h2 {
+    margin-bottom: 20px;
+    color: var(--plum);
+    font-size: 23px;
+}
+
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 580px;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th,
+td {
+    padding: 13px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(229, 235, 248, 0.12);
+}
+
+th {
+    color: var(--alice-blue);
+    background: var(--amethyst);
+    font-weight: bold;
+}
+
+td:first-child {
+    width: 65px;
+    color: var(--plum);
+    font-weight: bold;
+}
+
+td:nth-child(3) {
+    color: var(--icy-aqua);
+}
+
+tbody tr:nth-child(even) {
+    background: rgba(152, 129, 255, 0.05);
+}
+
+tbody tr:hover {
+    background: rgba(152, 129, 255, 0.12);
+}
+
+/* ======================================
+   PANTALLAS PEQUEÑAS
+   ====================================== */
+
+@media (max-width: 800px) {
+    body {
+        padding: 22px 12px;
+    }
+
+    .marco {
+        padding: 20px 12px 14px;
+    }
+
+    .contexto {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .concepto-general.principal {
+        grid-column: 1 / -1;
+    }
+
+    .tabla-seccion {
+        padding: 18px 12px;
+    }
+
+    .leyenda {
+        justify-content: flex-start;
+        gap: 14px;
+    }
+}
+
+@media print {
+    body {
+        padding: 0;
+        background: var(--fondo);
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .instruccion {
+        display: none;
+    }
+
+    .desplazamiento {
+        overflow: visible;
+    }
+
+    #mapa {
+        min-width: 0;
+    }
+
+    .marco {
+        box-shadow: none;
+    }
+
+    .tabla-seccion {
+        break-before: page;
+    }
+
+    tr {
+        break-inside: avoid;
+    }
+}

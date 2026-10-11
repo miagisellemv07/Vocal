@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOCA-IA | Consultas de la Red Semántica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="contenedor">
+
+        <header class="encabezado">
+            <span class="insignia">ENTREGABLE 3 · VOCA-IA</span>
+            <h1>Subsistema Basado en la Red Semántica</h1>
+            <p>
+                Consultas y recorridos sobre el conocimiento vocacional.
+            </p>
+
+            <div class="datos">
+                <span>30 relaciones almacenadas</span>
+                <span>Consultas directas</span>
+                <span>Recorridos de varios pasos</span>
+            </div>
+        </header>
+
+        <section class="panel explicacion">
+            <h2>¿Cómo funciona?</h2>
+            <p>
+                El sistema busca conexiones entre los conceptos.
+                Una consulta directa utiliza una relación; una consulta
+                de varios pasos recorre una secuencia de relaciones.
+            </p>
+
+            <div class="ejemplo">
+                <span class="concepto interes">Tecnología</span>
+                <span class="enlace">se relaciona con →</span>
+                <span class="concepto carrera">Ingeniería</span>
+                <span class="enlace">requiere →</span>
+                <span class="concepto habilidad">Matemáticas</span>
+            </div>
+
+            <p class="aclaracion">
+                Este camino permite asociar Tecnología con Matemáticas
+                a través de Ingeniería. Las asociaciones de varios pasos
+                son posibilidades dentro del modelo vocacional.
+            </p>
+        </section>
+
+        <section class="panel simulador">
+            <div class="titulo-panel">
+                <span class="icono">⌕</span>
+                <div>
+                    <h2>Simulador de consultas</h2>
+                    <p>Selecciona una pregunta y ejecuta el recorrido.</p>
+                </div>
+            </div>
+
+            <form id="formulario">
+                <label for="consulta">Consulta vocacional:</label>
+
+                <div class="controles">
+                    <select id="consulta" name="consulta"></select>
+                    <button type="submit">▶ Ejecutar consulta</button>
+                </div>
+            </form>
+
+            <p id="descripcion-consulta" class="descripcion"></p>
+        </section>
+
+        <section id="salida" hidden aria-live="polite">
+
+            <div class="resumen">
+                <div class="dato">
+                    <span>TIPO DE CONSULTA</span>
+                    <strong id="tipo"></strong>
+                </div>
+
+                <div class="dato">
+                    <span>PASOS POR CAMINO</span>
+                    <strong id="saltos"></strong>
+                </div>
+
+                <div class="dato">
+                    <span>RESULTADOS DISTINTOS</span>
+                    <strong id="cantidad"></strong>
+                </div>
+            </div>
+
+            <section class="panel">
+                <h2 id="pregunta-ejecutada"></h2>
+                <p id="estrategia" class="descripcion"></p>
+
+                <h3>Traza de ejecución</h3>
+                <ol id="traza" class="traza"></ol>
+            </section>
+
+            <section class="panel">
+                <h2>Caminos encontrados</h2>
+                <p class="descripcion">
+                    Las flechas representan la dirección original
+                    de cada relación almacenada.
+                </p>
+                <div id="caminos" class="caminos"></div>
+            </section>
+
+            <section class="panel resultado">
+                <span class="resultado-etiqueta">RESULTADO DE LA CONSULTA</span>
+                <h2 id="respuesta"></h2>
+                <p id="interpretacion"></p>
+            </section>
+
+        </section>
+
+        <footer>
+            VOCA-IA · Subsistema de consultas sobre la red semántica vocacional
+        </footer>
+    </main>
+
+    <script>
+        /*
+         * Base de conocimiento:
+         * las mismas 30 relaciones del entregable anterior.
+         */
+        const relaciones = [
+            ["Tecnología", "se relaciona con", "Ingeniería"],
+            ["Salud", "se relaciona con", "Medicina"],
+            ["Educación", "se relaciona con", "Derecho"],
+            ["Negocios", "se relaciona con", "Administración"],
+            ["Arte", "se relaciona con", "Diseño"],
+
+            ["Ingeniería", "requiere", "Matemáticas"],
+            ["Ingeniería", "requiere", "Análisis"],
+            ["Medicina", "requiere", "Análisis"],
+            ["Medicina", "requiere", "Comunicación"],
+            ["Administración", "requiere", "Liderazgo"],
+            ["Administración", "requiere", "Matemáticas"],
+            ["Administración", "requiere", "Creatividad"],
+            ["Diseño", "requiere", "Creatividad"],
+            ["Diseño", "requiere", "Comunicación"],
+            ["Derecho", "requiere", "Comunicación"],
+            ["Derecho", "requiere", "Análisis"],
+
+            ["Comunicación", "Indica", "Educación"],
+            ["Análisis", "Indica", "Educación"],
+            ["Liderazgo", "Indica", "Negocios"],
+            ["Matemáticas", "Indica", "Negocios"],
+            ["Creatividad", "Indica", "Negocios"],
+            ["Creatividad", "Indica", "Arte"],
+            ["Creatividad", "Indica", "Educación"],
+            ["Análisis", "Indica", "Salud"],
+            ["Comunicación", "Indica", "Salud"],
+            ["Matemáticas", "Indica", "Tecnología"],
+            ["Análisis", "Indica", "Tecnología"],
+            ["Liderazgo", "Indica", "Tecnología"],
+            ["Liderazgo", "Indica", "Arte"],
+            ["Matemáticas", "Indica", "Salud"]
+        ].map(([origen, relacion, destino], indice) => ({
+            id: indice + 1,
+            origen,
+            relacion,
+            destino
+        }));
+
+        const intereses = new Set([
+            "Tecnología", "Salud", "Educación", "Negocios", "Arte"
+        ]);
+
+        const habilidades = new Set([
+            "Matemáticas", "Comunicación", "Creatividad",
+            "Liderazgo", "Análisis"
+        ]);
+
+        const carreras = new Set([
+            "Ingeniería", "Medicina", "Administración", "Diseño", "Derecho"
+        ]);
+
+        /*
+         * Cada consulta define:
+         * - nodo de inicio;
+         * - etiquetas que debe seguir el recorrido;
+         * - dirección de búsqueda;
+         * - tipo de resultado esperado.
+         *
+         * Las búsquedas entrantes consultan quién requiere una habilidad.
+         * No modifican ni invierten la relación almacenada.
+         */
+        const consultas = [
+            {
+                pregunta: "¿Qué carreras requieren creatividad?",
+                inicio: "Creatividad",
+                patron: ["requiere"],
+                direccion: "entrante",
+                destino: "carrera"
+            },
+            {
+                pregunta: "¿Qué habilidades requiere Ingeniería?",
+                inicio: "Ingeniería",
+                patron: ["requiere"],
+                direccion: "saliente",
+                destino: "habilidad"
+            },
+            {
+                pregunta: "¿Qué área profesional se relaciona con Salud?",
+                inicio: "Salud",
+                patron: ["se relaciona con"],
+                direccion: "saliente",
+                destino: "carrera"
+            },
+            {
+                pregunta: "¿Qué carreras requieren liderazgo?",
+                inicio: "Liderazgo",
+                patron: ["requiere"],
+                direccion: "entrante",
+                destino: "carrera"
+            },
+            {
+                pregunta: "¿Qué habilidades se asocian con Tecnología mediante una carrera?",
+                inicio: "Tecnología",
+                patron: ["se relaciona con", "requiere"],
+                direccion: "saliente",
+                destino: "habilidad"
+            },
+            {
+                pregunta: "¿Qué carreras se asocian con Matemáticas mediante los intereses?",
+                inicio: "Matemáticas",
+                patron: ["Indica", "se relaciona con"],
+                direccion: "saliente",
+                destino: "carrera"
+            },
+            {
+                pregunta: "¿Qué carreras se asocian con Creatividad mediante los intereses?",
+                inicio: "Creatividad",
+                patron: ["Indica", "se relaciona con"],
+                direccion: "saliente",
+                destino: "carrera"
+            },
+            {
+                pregunta: "¿Qué carreras se asocian con Liderazgo mediante los intereses?",
+                inicio: "Liderazgo",
+                patron: ["Indica", "se relaciona con"],
+                direccion: "saliente",
+                destino: "carrera"
+            },
+            {
+                pregunta: "¿Qué habilidades se asocian con Salud mediante una carrera?",
+                inicio: "Salud",
+                patron: ["se relaciona con", "requiere"],
+                direccion: "saliente",
+                destino: "habilidad"
+            },
+            {
+                pregunta: "¿Qué intereses indica Análisis?",
+                inicio: "Análisis",
+                patron: ["Indica"],
+                direccion: "saliente",
+                destino: "interes"
+            }
+        ];
+
+        const salientes = new Map();
+        const entrantes = new Map();
+
+        relaciones.forEach(arista => {
+            if (!salientes.has(arista.origen)) {
+                salientes.set(arista.origen, []);
+            }
+
+            if (!entrantes.has(arista.destino)) {
+                entrantes.set(arista.destino, []);
+            }
+
+            salientes.get(arista.origen).push(arista);
+            entrantes.get(arista.destino).push(arista);
+        });
+
+        const selector = document.getElementById("consulta");
+        const formulario = document.getElementById("formulario");
+
+        consultas.forEach((consulta, indice) => {
+            const opcion = document.createElement("option");
+            opcion.value = indice;
+            opcion.textContent = consulta.pregunta;
+            selector.appendChild(opcion);
+        });
+
+        function describirConsulta() {
+            const consulta = consultas[Number(selector.value)];
+            const pasos = consulta.patron.length;
+
+            document.getElementById("descripcion-consulta").textContent =
+                pasos === 1
+                    ? "Consulta directa: busca una relación almacenada."
+                    : "Consulta de varios pasos: sigue un camino dirigido de dos relaciones.";
+        }
+
+        selector.addEventListener("change", () => {
+            describirConsulta();
+            document.getElementById("salida").hidden = true;
+        });
+
+        describirConsulta();
+
+        function tipoConcepto(nombre) {
+            if (intereses.has(nombre)) return "interes";
+            if (habilidades.has(nombre)) return "habilidad";
+            if (carreras.has(nombre)) return "carrera";
+            return "";
+        }
+
+        /*
+         * Recorrido por amplitud (BFS), restringido al patrón de consulta.
+         * El límite de profundidad es la longitud del patrón.
+         * Se evitan ciclos dentro de cada camino.
+         */
+        function recorrer(consulta) {
+            const cola = [{
+                nodo: consulta.inicio,
+                profundidad: 0,
+                camino: [],
+                visitados: new Set([consulta.inicio])
+            }];
+
+            const encontrados = [];
+            const traza = [];
+
+            traza.push(`Nodo inicial: [${consulta.inicio}].`);
+
+            while (cola.length > 0) {
+                const estado = cola.shift();
+
+                if (estado.profundidad === consulta.patron.length) {
+                    if (tipoConcepto(estado.nodo) === consulta.destino) {
+                        encontrados.push({
+                            destino: estado.nodo,
+                            camino: estado.camino
+                        });
+
+                        traza.push(
+                            `Resultado aceptado: [${estado.nodo}], ` +
+                            `tipo ${consulta.destino}.`
+                        );
+                    }
+                    continue;
+                }
+
+                const etiqueta = consulta.patron[estado.profundidad];
+                const buscarEntrantes = consulta.direccion === "entrante";
+
+                const candidatas = buscarEntrantes
+                    ? entrantes.get(estado.nodo) || []
+                    : salientes.get(estado.nodo) || [];
+
+                traza.push(
+                    `Paso ${estado.profundidad + 1}: revisar relaciones ` +
+                    `${buscarEntrantes ? "entrantes" : "salientes"} ` +
+                    `de [${estado.nodo}], buscando "${etiqueta}".`
+                );
+
+                let coincidencias = 0;
+
+                candidatas.forEach(arista => {
+                    const descripcion =
+                        `R${arista.id}: ${arista.origen} → ` +
+                        `${arista.relacion} → ${arista.destino}`;
+
+                    if (arista.relacion !== etiqueta) {
+                        traza.push(
+                            `Se descarta ${descripcion}: etiqueta diferente.`
+                        );
+                        return;
+                    }
+
+                    const siguiente = buscarEntrantes
+                        ? arista.origen
+                        : arista.destino;
+
+                    if (estado.visitados.has(siguiente)) {
+                        traza.push(
+                            `Se descarta ${descripcion}: repetiría un nodo del camino.`
+                        );
+                        return;
+                    }
+
+                    coincidencias++;
+                    traza.push(`Se sigue ${descripcion}.`);
+
+                    cola.push({
+                        nodo: siguiente,
+                        profundidad: estado.profundidad + 1,
+                        camino: [...estado.camino, arista],
+                        visitados: new Set([
+                            ...estado.visitados,
+                            siguiente
+                        ])
+                    });
+                });
+
+                if (coincidencias === 0) {
+                    traza.push(
+                        `No hay conexiones válidas para continuar desde [${estado.nodo}].`
+                    );
+                }
+            }
+
+            return { encontrados, traza };
+        }
+
+        function crearConcepto(nombre) {
+            const elemento = document.createElement("span");
+            elemento.className = `concepto ${tipoConcepto(nombre)}`;
+            elemento.textContent = nombre;
+            return elemento;
+        }
+
+        function mostrarCamino(resultado, indice) {
+            const tarjeta = document.createElement("article");
+            tarjeta.className = "tarjeta-camino";
+
+            const titulo = document.createElement("h3");
+            titulo.textContent =
+                `Camino ${indice + 1} · ${resultado.camino.length} ` +
+                `${resultado.camino.length === 1 ? "relación" : "relaciones"}`;
+
+            const fila = document.createElement("div");
+            fila.className = "ruta";
+
+            /*
+             * Los caminos salientes ya están ordenados.
+             * Las consultas entrantes de esta interfaz son de un paso.
+             */
+            resultado.camino.forEach((arista, posicion) => {
+                if (posicion === 0) {
+                    fila.appendChild(crearConcepto(arista.origen));
+                }
+
+                const enlace = document.createElement("span");
+                enlace.className = "enlace";
+                enlace.textContent =
+                    `R${arista.id} · ${arista.relacion} →`;
+
+                fila.append(
+                    enlace,
+                    crearConcepto(arista.destino)
+                );
+            });
+
+            tarjeta.append(titulo, fila);
+            return tarjeta;
+        }
+
+        formulario.addEventListener("submit", evento => {
+            evento.preventDefault();
+
+            const consulta = consultas[Number(selector.value)];
+            const { encontrados, traza } = recorrer(consulta);
+
+            const destinos = [...new Set(
+                encontrados.map(resultado => resultado.destino)
+            )];
+
+            const variosPasos = consulta.patron.length > 1;
+
+            document.getElementById("salida").hidden = false;
+
+            document.getElementById("tipo").textContent =
+                variosPasos ? "Asociación de varios pasos" : "Relación directa";
+
+            document.getElementById("saltos").textContent =
+                consulta.patron.length;
+
+            document.getElementById("cantidad").textContent =
+                destinos.length;
+
+            document.getElementById("pregunta-ejecutada").textContent =
+                consulta.pregunta;
+
+            document.getElementById("estrategia").textContent =
+                consulta.direccion === "entrante"
+                    ? `Estrategia: consultar aristas entrantes con etiqueta ` +
+                      `"${consulta.patron[0]}". Se conserva su dirección original.`
+                    : `Estrategia: recorrido BFS sobre aristas salientes, ` +
+                      `siguiendo ${consulta.patron.join(" → ")}.`;
+
+            const listaTraza = document.getElementById("traza");
+            listaTraza.replaceChildren();
+
+            traza.forEach(paso => {
+                const item = document.createElement("li");
+                item.textContent = paso;
+                listaTraza.appendChild(item);
+            });
+
+            const listaCaminos = document.getElementById("caminos");
+            listaCaminos.replaceChildren();
+
+            encontrados.forEach((resultado, indice) => {
+                listaCaminos.appendChild(
+                    mostrarCamino(resultado, indice)
+                );
+            });
+
+            if (destinos.length === 0) {
+                const mensaje = document.createElement("p");
+                mensaje.textContent =
+                    "No se encontraron caminos para esta consulta.";
+                listaCaminos.appendChild(mensaje);
+            }
+
+            document.getElementById("respuesta").textContent =
+                destinos.length > 0
+                    ? destinos.join(" · ")
+                    : "Sin resultados";
+
+            let interpretacion;
+
+            if (destinos.length === 0) {
+                interpretacion =
+                    "La base actual no contiene un camino que responda esta pregunta.";
+            } else if (variosPasos) {
+                interpretacion =
+                    `Desde ${consulta.inicio} se encontraron asociaciones ` +
+                    `posibles con ${destinos.join(", ")} mediante los caminos ` +
+                    `mostrados. El recorrido no establece una recomendación definitiva.`;
+            } else if (consulta.direccion === "entrante") {
+                interpretacion =
+                    `Según la base de conocimiento, ` +
+                    `${destinos.join(", ")} requiere${destinos.length > 1 ? "n" : ""} ` +
+                    `${consulta.inicio}.`;
+            } else {
+                interpretacion =
+                    `La base contiene relaciones directas desde ` +
+                    `${consulta.inicio} hacia ${destinos.join(", ")}, ` +
+                    `con la etiqueta "${consulta.patron[0]}".`;
+            }
+
+            document.getElementById("interpretacion").textContent =
+                interpretacion;
+        });
+    </script>
+</body>
+</html>

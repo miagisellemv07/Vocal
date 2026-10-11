@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Semántica Vocacional</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="contenedor">
+
+        <header class="encabezado">
+            <span class="etiqueta">ENTREGABLE 2</span>
+            <h1>RED SEMÁNTICA VOCACIONAL</h1>
+            <p>Representación del conocimiento mediante conceptos y relaciones</p>
+
+            <div class="contador">
+                <span>20 conceptos</span>
+                <span>30 relaciones</span>
+            </div>
+        </header>
+
+        <section class="marco">
+
+            <div class="contexto" aria-label="Conceptos generales">
+                <div class="concepto-general principal">Estudiante</div>
+                <div class="concepto-general">Intereses</div>
+                <div class="concepto-general">Habilidades</div>
+                <div class="concepto-general">Áreas profesionales</div>
+                <div class="concepto-general">Recomendación vocacional</div>
+            </div>
+
+            <p class="instruccion">
+                Pasa el cursor o selecciona un concepto para destacar sus relaciones.
+            </p>
+
+            <div class="desplazamiento">
+                <svg
+                    id="mapa"
+                    viewBox="0 0 1800 1400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-labelledby="titulo-mapa descripcion-mapa"
+                >
+                    <title id="titulo-mapa">Red semántica vocacional</title>
+                    <desc id="descripcion-mapa">
+                        Quince conceptos específicos conectados mediante treinta
+                        relaciones dirigidas. Los cinco conceptos generales
+                        aparecen encima del grafo.
+                    </desc>
+
+                    <defs>
+                        <marker
+                            id="flecha"
+                            viewBox="0 0 10 10"
+                            refX="9"
+                            refY="5"
+                            markerWidth="7"
+                            markerHeight="7"
+                            orient="auto-start-reverse"
+                        >
+                            <path d="M 0 0 L 10 5 L 0 10 Z"
+                                  fill="context-stroke"/>
+                        </marker>
+                    </defs>
+
+                    <g id="titulos"></g>
+                    <g id="conexiones"></g>
+                    <g id="etiquetas"></g>
+                    <g id="conceptos"></g>
+                </svg>
+            </div>
+
+            <footer class="leyenda">
+                <span><i class="color-intereses"></i>Intereses</span>
+                <span><i class="color-carreras"></i>Áreas profesionales</span>
+                <span><i class="color-habilidades"></i>Habilidades</span>
+                <span class="leyenda-flecha">→ Dirección de la relación</span>
+            </footer>
+
+        </section>
+
+        <section class="tabla-seccion">
+            <h2>Las 30 relaciones</h2>
+
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Origen</th>
+                            <th>Relación</th>
+                            <th>Destino</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-relaciones"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const NS = "http://www.w3.org/2000/svg";
+
+        /*
+         * Cinco intereses + cinco áreas profesionales + cinco habilidades.
+         * Los otros cinco conceptos están en la franja superior.
+         */
+        const conceptos = [
+            { id: "tecnologia", texto: "Tecnología", grupo: "intereses", x: 240, y: 260 },
+            { id: "salud", texto: "Salud", grupo: "intereses", x: 570, y: 260 },
+            { id: "educacion", texto: "Educación", grupo: "intereses", x: 900, y: 260 },
+            { id: "negocios", texto: "Negocios", grupo: "intereses", x: 1230, y: 260 },
+            { id: "arte", texto: "Arte", grupo: "intereses", x: 1560, y: 260 },
+
+            { id: "ingenieria", texto: "Ingeniería", grupo: "carreras", x: 240, y: 690 },
+            { id: "medicina", texto: "Medicina", grupo: "carreras", x: 570, y: 690 },
+            { id: "derecho", texto: "Derecho", grupo: "carreras", x: 900, y: 690 },
+            { id: "administracion", texto: "Administración", grupo: "carreras", x: 1230, y: 690 },
+            { id: "diseno", texto: "Diseño", grupo: "carreras", x: 1560, y: 690 },
+
+            { id: "matematicas", texto: "Matemáticas", grupo: "habilidades", x: 240, y: 1120 },
+            { id: "analisis", texto: "Análisis", grupo: "habilidades", x: 570, y: 1120 },
+            { id: "comunicacion", texto: "Comunicación", grupo: "habilidades", x: 900, y: 1120 },
+            { id: "liderazgo", texto: "Liderazgo", grupo: "habilidades", x: 1230, y: 1120 },
+            { id: "creatividad", texto: "Creatividad", grupo: "habilidades", x: 1560, y: 1120 }
+        ];
+
+        // Tus treinta relaciones, conservadas en el mismo orden.
+        const relaciones = [
+            ["tecnologia", "se relaciona con", "ingenieria"],
+            ["salud", "se relaciona con", "medicina"],
+            ["educacion", "se relaciona con", "derecho"],
+            ["negocios", "se relaciona con", "administracion"],
+            ["arte", "se relaciona con", "diseno"],
+
+            ["ingenieria", "requiere", "matematicas"],
+            ["ingenieria", "requiere", "analisis"],
+            ["medicina", "requiere", "analisis"],
+            ["medicina", "requiere", "comunicacion"],
+            ["administracion", "requiere", "liderazgo"],
+            ["administracion", "requiere", "matematicas"],
+            ["administracion", "requiere", "creatividad"],
+            ["diseno", "requiere", "creatividad"],
+            ["diseno", "requiere", "comunicacion"],
+            ["derecho", "requiere", "comunicacion"],
+            ["derecho", "requiere", "analisis"],
+
+            ["comunicacion", "Indica", "educacion"],
+            ["analisis", "Indica", "educacion"],
+            ["liderazgo", "Indica", "negocios"],
+            ["matematicas", "Indica", "negocios"],
+            ["creatividad", "Indica", "negocios"],
+            ["creatividad", "Indica", "arte"],
+            ["creatividad", "Indica", "educacion"],
+            ["analisis", "Indica", "salud"],
+            ["comunicacion", "Indica", "salud"],
+            ["matematicas", "Indica", "tecnologia"],
+            ["analisis", "Indica", "tecnologia"],
+            ["liderazgo", "Indica", "tecnologia"],
+            ["liderazgo", "Indica", "arte"],
+            ["matematicas", "Indica", "salud"]
+        ];
+
+        const porId = Object.fromEntries(
+            conceptos.map(concepto => [concepto.id, concepto])
+        );
+
+        const svg = document.getElementById("mapa");
+        const conexiones = document.getElementById("conexiones");
+        const etiquetas = document.getElementById("etiquetas");
+        const nodos = document.getElementById("conceptos");
+        const tabla = document.getElementById("tabla-relaciones");
+
+        let seleccionado = null;
+
+        function crearSVG(tipo, atributos = {}) {
+            const elemento = document.createElementNS(NS, tipo);
+
+            Object.entries(atributos).forEach(([nombre, valor]) => {
+                elemento.setAttribute(nombre, valor);
+            });
+
+            return elemento;
+        }
+
+        function tituloFila(texto, y) {
+            const titulo = crearSVG("text", {
+                x: 900,
+                y,
+                class: "titulo-fila",
+                "text-anchor": "middle"
+            });
+
+            titulo.textContent = texto;
+            document.getElementById("titulos").appendChild(titulo);
+        }
+
+        tituloFila("INTERESES", 205);
+        tituloFila("ÁREAS PROFESIONALES", 635);
+        tituloFila("HABILIDADES", 1065);
+
+        /*
+         * Cada relación tiene su propia línea y etiqueta.
+         * Las conexiones “Indica” regresan de las habilidades
+         * hacia los intereses mediante curvas.
+         */
+        relaciones.forEach(([origen, relacion, destino], indice) => {
+            const a = porId[origen];
+            const b = porId[destino];
+
+            const esRetorno = relacion === "Indica";
+            const clase = esRetorno
+                ? "indica"
+                : relacion === "requiere"
+                    ? "requiere"
+                    : "relaciona";
+
+            let recorrido;
+            let posicionEtiqueta;
+
+            if (!esRetorno) {
+                const inicioY = a.y + 38;
+                const finalY = b.y - 38;
+
+                recorrido = [
+                    `M ${a.x} ${inicioY}`,
+                    `C ${a.x} ${inicioY + 145}`,
+                    `${b.x} ${finalY - 145}`,
+                    `${b.x} ${finalY}`
+                ].join(" ");
+
+                posicionEtiqueta = relacion === "requiere"
+                    ? 0.24 + ((indice - 5) % 4) * 0.16
+                    : 0.5;
+
+            } else {
+                const numero = indice - 16;
+                const desplazamiento = (numero % 7 - 3) * 44;
+                const lado = numero % 2 === 0 ? 1 : -1;
+
+                const inicioX = a.x + lado * 125;
+                const finalX = b.x + lado * 125;
+
+                const controlA = Math.max(
+                    32,
+                    Math.min(1768, inicioX + lado * 105 + desplazamiento)
+                );
+
+                const controlB = Math.max(
+                    32,
+                    Math.min(1768, finalX + lado * 105 + desplazamiento)
+                );
+
+                recorrido = [
+                    `M ${inicioX} ${a.y}`,
+                    `C ${controlA} ${a.y - 200}`,
+                    `${controlB} ${b.y + 200}`,
+                    `${finalX} ${b.y}`
+                ].join(" ");
+
+                posicionEtiqueta = 0.10 + numero * 0.055;
+            }
+
+            const linea = crearSVG("path", {
+                d: recorrido,
+                class: `conexion ${clase}`,
+                "marker-end": "url(#flecha)",
+                "data-origen": origen,
+                "data-destino": destino
+            });
+
+            const descripcion = crearSVG("title");
+            descripcion.textContent =
+                `${indice + 1}. ${a.texto} → ${relacion} → ${b.texto}`;
+
+            linea.appendChild(descripcion);
+            conexiones.appendChild(linea);
+
+            const punto = linea.getPointAtLength(
+                linea.getTotalLength() * posicionEtiqueta
+            );
+
+            const ancho = relacion === "se relaciona con" ? 154 : 112;
+
+            const etiqueta = crearSVG("g", {
+                class: `etiqueta-relacion ${clase}`,
+                transform: `translate(${punto.x}, ${punto.y})`,
+                "data-origen": origen,
+                "data-destino": destino
+            });
+
+            const fondo = crearSVG("rect", {
+                x: -ancho / 2,
+                y: -15,
+                width: ancho,
+                height: 30,
+                rx: 7
+            });
+
+            const texto = crearSVG("text", {
+                x: 0,
+                y: 1,
+                "text-anchor": "middle",
+                "dominant-baseline": "middle"
+            });
+
+            texto.textContent = `${indice + 1} · ${relacion}`;
+
+            etiqueta.append(fondo, texto);
+            etiquetas.appendChild(etiqueta);
+
+            const fila = document.createElement("tr");
+
+            [indice + 1, a.texto, relacion, b.texto].forEach(valor => {
+                const celda = document.createElement("td");
+                celda.textContent = valor;
+                fila.appendChild(celda);
+            });
+
+            tabla.appendChild(fila);
+        });
+
+        conceptos.forEach(concepto => {
+            const grupo = crearSVG("g", {
+                class: `nodo ${concepto.grupo}`,
+                transform: `translate(${concepto.x}, ${concepto.y})`,
+                "data-id": concepto.id,
+                tabindex: 0,
+                role: "button",
+                "aria-label": `Resaltar relaciones de ${concepto.texto}`,
+                "aria-pressed": "false"
+            });
+
+            const caja = crearSVG("rect", {
+                x: -125,
+                y: -38,
+                width: 250,
+                height: 76,
+                rx: concepto.grupo === "intereses" ? 38 : 15
+            });
+
+            const texto = crearSVG("text", {
+                x: 0,
+                y: 2,
+                "text-anchor": "middle",
+                "dominant-baseline": "middle"
+            });
+
+            texto.textContent = concepto.texto;
+            grupo.append(caja, texto);
+
+            grupo.addEventListener("mouseenter", () => {
+                resaltar(concepto.id);
+            });
+
+            grupo.addEventListener("mouseleave", () => {
+                resaltar(seleccionado);
+            });
+
+            grupo.addEventListener("focus", () => {
+                resaltar(concepto.id);
+            });
+
+            grupo.addEventListener("blur", () => {
+                resaltar(seleccionado);
+            });
+
+            function seleccionar() {
+                seleccionado = seleccionado === concepto.id
+                    ? null
+                    : concepto.id;
+
+                document.querySelectorAll(".nodo").forEach(nodo => {
+                    nodo.setAttribute(
+                        "aria-pressed",
+                        String(nodo.dataset.id === seleccionado)
+                    );
+                });
+
+                resaltar(seleccionado);
+            }
+
+            grupo.addEventListener("click", seleccionar);
+
+            grupo.addEventListener("keydown", evento => {
+                if (evento.key === "Enter" || evento.key === " ") {
+                    evento.preventDefault();
+                    seleccionar();
+                }
+            });
+
+            nodos.appendChild(grupo);
+        });
+
+        function resaltar(id) {
+            const relacionados = new Set(id ? [id] : []);
+
+            svg.classList.toggle("enfoque", Boolean(id));
+
+            document.querySelectorAll(
+                ".conexion, .etiqueta-relacion"
+            ).forEach(elemento => {
+                const coincide = id && (
+                    elemento.dataset.origen === id ||
+                    elemento.dataset.destino === id
+                );
+
+                elemento.classList.toggle("activa", Boolean(coincide));
+
+                if (coincide) {
+                    relacionados.add(elemento.dataset.origen);
+                    relacionados.add(elemento.dataset.destino);
+                }
+            });
+
+            document.querySelectorAll(".nodo").forEach(nodo => {
+                nodo.classList.toggle(
+                    "activo",
+                    relacionados.has(nodo.dataset.id)
+                );
+            });
+        }
+
+        document.addEventListener("keydown", evento => {
+            if (evento.key === "Escape") {
+                seleccionado = null;
+
+                document.querySelectorAll(".nodo").forEach(nodo => {
+                    nodo.setAttribute("aria-pressed", "false");
+                });
+
+                resaltar(null);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+/* =====================================
+   TU PALETA
+   ===================================== */
+
+:root {
+    --alice-blue: #E5EBF8;
+    --icy-aqua: #BEFFEA;
+    --plum: #F4A4F5;
+    --periwinkle: #9881FF;
+    --amethyst: #A94ACF;
+
+    --fondo: #11182B;
+    --panel: #182239;
+}
+
+/* =====================================
+   GENERAL
+   ===================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+body {
+    min-height: 100vh;
+    padding: 40px 20px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--alice-blue);
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(169, 74, 207, 0.22),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(190, 255, 234, 0.10),
+            transparent 45%
+        ),
+        var(--fondo);
+}
+
+.contenedor {
+    width: 100%;
+    max-width: 1120px;
+    margin: auto;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.3;
+}
+
+p {
+    line-height: 1.7;
+}
+
+/* =====================================
+   ENCABEZADO
+   ===================================== */
+
+.encabezado {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.insignia {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 9px 18px;
+
+    border: 1px solid var(--amethyst);
+    border-radius: 30px;
+
+    color: var(--plum);
+    background: rgba(169, 74, 207, 0.12);
+
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+h1 {
+    margin-bottom: 14px;
+    font-size: clamp(28px, 4vw, 44px);
+}
+
+.encabezado > p {
+    opacity: 0.8;
+}
+
+.datos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.datos span {
+    padding: 9px 14px;
+
+    color: var(--icy-aqua);
+    border: 1px solid rgba(190, 255, 234, 0.3);
+    border-radius: 9px;
+
+    font-size: 12px;
+}
+
+/* =====================================
+   PANELES
+   ===================================== */
+
+.panel {
+    margin-bottom: 24px;
+    padding: 30px;
+
+    background: var(--panel);
+    border: 1px solid rgba(152, 129, 255, 0.35);
+    border-radius: 18px;
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.panel h2 {
+    margin-bottom: 14px;
+    color: var(--plum);
+    font-size: 22px;
+}
+
+.panel h3 {
+    margin-top: 24px;
+    margin-bottom: 14px;
+    color: var(--icy-aqua);
+    font-size: 16px;
+}
+
+.explicacion > p {
+    font-size: 15px;
+}
+
+.aclaracion {
+    margin-top: 18px;
+    opacity: 0.8;
+    font-size: 13px !important;
+}
+
+/* =====================================
+   CONCEPTOS Y CAMINOS
+   ===================================== */
+
+.ejemplo,
+.ruta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.ejemplo {
+    margin-top: 22px;
+    padding: 22px 15px;
+
+    background: var(--fondo);
+    border-radius: 12px;
+}
+
+.concepto {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+    padding: 12px 18px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+
+    color: var(--fondo);
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.concepto.interes {
+    background: var(--plum);
+    border-color: var(--amethyst);
+}
+
+.concepto.carrera {
+    background: var(--periwinkle);
+    border-color: var(--alice-blue);
+}
+
+.concepto.habilidad {
+    background: var(--icy-aqua);
+    border-color: var(--periwinkle);
+}
+
+.enlace {
+    color: var(--alice-blue);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* =====================================
+   SIMULADOR
+   ===================================== */
+
+.titulo-panel {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.titulo-panel h2 {
+    margin-bottom: 5px;
+}
+
+.titulo-panel p {
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
+
+    background: var(--amethyst);
+    border-radius: 14px;
+
+    color: var(--alice-blue);
+    font-size: 32px;
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.controles {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+}
+
+select,
+button {
+    min-height: 52px;
+    padding: 13px 16px;
+    border-radius: 10px;
+    font: inherit;
+}
+
+select {
+    width: 100%;
+    min-width: 0;
+
+    color: var(--alice-blue);
+    background: var(--fondo);
+    border: 1px solid var(--periwinkle);
+
+    cursor: pointer;
+}
+
+select option {
+    color: var(--alice-blue);
+    background: var(--fondo);
+}
+
+button {
+    color: var(--alice-blue);
+    background: var(--amethyst);
+    border: 1px solid var(--plum);
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+button:hover {
+    color: var(--fondo);
+    background: var(--plum);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+select:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--icy-aqua);
+    outline-offset: 4px;
+}
+
+.descripcion {
+    margin-top: 16px;
+    color: var(--alice-blue);
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+/* =====================================
+   RESUMEN DE LA CONSULTA
+   ===================================== */
+
+.resumen {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.dato {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+
+    background: var(--panel);
+    border: 1px solid rgba(152, 129, 255, 0.35);
+    border-radius: 14px;
+}
+
+.dato span {
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    opacity: 0.8;
+}
+
+.dato strong {
+    color: var(--icy-aqua);
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+/* =====================================
+   TRAZA
+   ===================================== */
+
+.traza {
+    padding: 20px 20px 20px 46px;
+    max-height: 420px;
+    overflow-y: auto;
+
+    background: var(--fondo);
+    border: 1px solid rgba(190, 255, 234, 0.2);
+    border-radius: 12px;
+
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.8;
+
+    scrollbar-color: var(--periwinkle) var(--fondo);
+}
+
+.traza li {
+    padding: 6px 0 6px 4px;
+    overflow-wrap: anywhere;
+}
+
+.traza li::marker {
+    color: var(--plum);
+    font-weight: bold;
+}
+
+/* =====================================
+   CAMINOS ENCONTRADOS
+   ===================================== */
+
+.caminos {
+    display: grid;
+    gap: 16px;
+    margin-top: 22px;
+}
+
+.tarjeta-camino {
+    padding: 20px;
+
+    background: var(--fondo);
+    border: 1px solid rgba(152, 129, 255, 0.3);
+    border-radius: 13px;
+}
+
+.tarjeta-camino h3 {
+    margin: 0 0 18px;
+    color: var(--alice-blue);
+    font-size: 13px;
+}
+
+.ruta {
+    justify-content: flex-start;
+}
+
+/* =====================================
+   RESULTADO
+   ===================================== */
+
+.resultado {
+    border-color: var(--icy-aqua);
+    background:
+        linear-gradient(
+            120deg,
+            rgba(190, 255, 234, 0.08),
+            rgba(152, 129, 255, 0.08)
+        ),
+        var(--panel);
+}
+
+.resultado-etiqueta {
+    display: block;
+    margin-bottom: 15px;
+
+    color: var(--icy-aqua);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.resultado h2 {
+    color: var(--icy-aqua);
+    font-size: 25px;
+}
+
+.resultado p {
+    font-size: 15px;
+}
+
+/* =====================================
+   PIE
+   ===================================== */
+
+footer {
+    padding: 16px 10px;
+    text-align: center;
+    color: var(--alice-blue);
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.65;
+}
+
+/* =====================================
+   ADAPTACIÓN A MÓVIL
+   ===================================== */
+
+@media (max-width: 750px) {
+    body {
+        padding: 25px 12px;
+    }
+
+    .panel {
+        padding: 22px 16px;
+    }
+
+    .controles {
+        grid-template-columns: 1fr;
+    }
+
+    .resumen {
+        grid-template-columns: 1fr;
+    }
+
+    .dato {
+        padding: 16px;
+    }
+
+    .ejemplo,
+    .ruta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .enlace {
+        padding: 4px;
+    }
+
+    .titulo-panel {
+        align-items: flex-start;
+    }
+
+    .traza {
+        padding-left: 35px;
+        font-size: 12px;
+    }
+}
+
+@media print {
+    body {
+        padding: 0;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .panel,
+    .dato {
+        box-shadow: none;
+    }
+
+    .traza {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .tarjeta-camino,
+    .resultado,
+    .dato {
+        break-inside: avoid;
+    }
+
+    button {
+        display: none;
+    }
+}

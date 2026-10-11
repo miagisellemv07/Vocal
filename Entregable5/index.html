@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregable 5 · Juego de Inferencias</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="contenedor">
+
+        <header class="encabezado">
+            <span class="etiqueta">ENTREGABLE 5</span>
+            <h1>Juego de Inferencias (Cadenas Lógicas)</h1>
+            <p>Demostración gráfica y deductiva de 5 cadenas de inferencia</p>
+        </header>
+
+        <section class="fundamento">
+            <h2>¿Qué es una cadena de inferencia?</h2>
+            <p>
+                Una cadena de inferencia muestra el razonamiento paso a paso
+                que sigue el sistema para llegar a una conclusión.
+                En el <strong>encadenamiento hacia adelante</strong>,
+                los hechos permiten activar reglas y obtener recomendaciones.
+                En el <strong>encadenamiento hacia atrás</strong>,
+                se parte de una recomendación posible y se buscan los hechos
+                que permitirían respaldarla.
+            </p>
+            <p class="nota">
+                Las siguientes cinco cadenas utilizan encadenamiento hacia
+                adelante y las reglas del entregable 4.
+            </p>
+        </section>
+
+        <section class="diagrama">
+            <h2>Diagrama: Cadena de Inferencia Vocacional (Caso 1)</h2>
+
+            <div class="diagrama-contenedor">
+                <svg
+                    viewBox="0 0 1150 330"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-labelledby="titulo-diagrama descripcion-diagrama"
+                >
+                    <title id="titulo-diagrama">
+                        Inferencia para recomendar Ingeniería
+                    </title>
+                    <desc id="descripcion-diagrama">
+                        El interés en tecnología y la habilidad matemática
+                        activan la regla R1, que permite recomendar Ingeniería.
+                    </desc>
+
+                    <defs>
+                        <marker
+                            id="flecha"
+                            viewBox="0 0 10 10"
+                            refX="9"
+                            refY="5"
+                            markerWidth="8"
+                            markerHeight="8"
+                            orient="auto"
+                        >
+                            <path d="M 0 0 L 10 5 L 0 10 Z"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Conexiones -->
+                    <g class="conexiones">
+                        <path d="M 310 90 L 440 165"/>
+                        <path d="M 310 240 L 440 165"/>
+                        <path d="M 685 165 L 815 165"/>
+                    </g>
+
+                    <!-- Primer hecho -->
+                    <g class="nodo hecho">
+                        <rect x="35" y="45" width="275" height="90" rx="14"/>
+                        <text x="172.5" y="76" class="titulo-nodo">
+                            HECHO 1 (ENTRADA)
+                        </text>
+                        <text x="172.5" y="106" class="texto-nodo">
+                            Interés en tecnología
+                        </text>
+                    </g>
+
+                    <!-- Segundo hecho -->
+                    <g class="nodo hecho">
+                        <rect x="35" y="195" width="275" height="90" rx="14"/>
+                        <text x="172.5" y="226" class="titulo-nodo">
+                            HECHO 2 (ENTRADA)
+                        </text>
+                        <text x="172.5" y="256" class="texto-nodo">
+                            Habilidad matemática
+                        </text>
+                    </g>
+
+                    <!-- Regla -->
+                    <g class="nodo regla">
+                        <rect x="440" y="120" width="245" height="90" rx="14"/>
+                        <text x="562.5" y="152" class="titulo-nodo">
+                            ACTIVA REGLA R1
+                        </text>
+                        <text x="562.5" y="182" class="texto-nodo">
+                            SI H1 Y H2
+                        </text>
+                    </g>
+
+                    <!-- Conclusión -->
+                    <g class="nodo conclusion">
+                        <rect x="815" y="120" width="300" height="90" rx="14"/>
+                        <text x="965" y="152" class="titulo-nodo">
+                            CONCLUSIÓN DEDUCIDA
+                        </text>
+                        <text x="965" y="182" class="texto-nodo">
+                            Recomendar Ingeniería
+                        </text>
+                    </g>
+                </svg>
+            </div>
+        </section>
+
+        <section class="cadenas" aria-label="Cinco cadenas de inferencia">
+
+            <article class="tarjeta">
+                <h2>Cadena 1: Ingeniería</h2>
+
+                <div class="contenido">
+                    <h3>Hechos</h3>
+                    <ul>
+                        <li>Le gusta la tecnología.</li>
+                        <li>Tiene habilidad matemática.</li>
+                    </ul>
+
+                    <p class="activacion">↓ Activa Regla R1</p>
+
+                    <div class="codigo">
+                        <p><b>SI</b> interes_tecnologia = TRUE <b>Y</b></p>
+                        <p>habilidad_matematica = TRUE</p>
+                        <p><b>ENTONCES</b> recomendacion = Ingenieria</p>
+                    </div>
+
+                    <p class="deduccion">↓ Deduce la recomendación</p>
+
+                    <div class="inferencia">
+                        <span>Tecnología + Matemáticas</span>
+                        <span class="flecha">↓</span>
+                        <strong>Ingeniería</strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tarjeta">
+                <h2>Cadena 2: Medicina</h2>
+
+                <div class="contenido">
+                    <h3>Hechos</h3>
+                    <ul>
+                        <li>Le gusta la salud.</li>
+                        <li>Tiene capacidad de análisis.</li>
+                    </ul>
+
+                    <p class="activacion">↓ Activa Regla R3</p>
+
+                    <div class="codigo">
+                        <p><b>SI</b> interes_salud = TRUE <b>Y</b></p>
+                        <p>capacidad_analisis = TRUE</p>
+                        <p><b>ENTONCES</b> recomendacion = Medicina</p>
+                    </div>
+
+                    <p class="deduccion">↓ Deduce la recomendación</p>
+
+                    <div class="inferencia">
+                        <span>Salud + Análisis</span>
+                        <span class="flecha">↓</span>
+                        <strong>Medicina</strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tarjeta">
+                <h2>Cadena 3: Administración</h2>
+
+                <div class="contenido">
+                    <h3>Hechos</h3>
+                    <ul>
+                        <li>Le interesan los negocios.</li>
+                        <li>Posee liderazgo.</li>
+                    </ul>
+
+                    <p class="activacion">↓ Activa Regla R5</p>
+
+                    <div class="codigo">
+                        <p><b>SI</b> interes_negocios = TRUE <b>Y</b></p>
+                        <p>habilidad_liderazgo = TRUE</p>
+                        <p><b>ENTONCES</b> recomendacion = Administracion</p>
+                    </div>
+
+                    <p class="deduccion">↓ Deduce la recomendación</p>
+
+                    <div class="inferencia">
+                        <span>Negocios + Liderazgo</span>
+                        <span class="flecha">↓</span>
+                        <strong>Administración</strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tarjeta">
+                <h2>Cadena 4: Diseño</h2>
+
+                <div class="contenido">
+                    <h3>Hechos</h3>
+                    <ul>
+                        <li>Le gusta el arte.</li>
+                        <li>Posee creatividad.</li>
+                    </ul>
+
+                    <p class="activacion">↓ Activa Regla R7</p>
+
+                    <div class="codigo">
+                        <p><b>SI</b> interes_arte = TRUE <b>Y</b></p>
+                        <p>habilidad_creatividad = TRUE</p>
+                        <p><b>ENTONCES</b> recomendacion = Diseno</p>
+                    </div>
+
+                    <p class="deduccion">↓ Deduce la recomendación</p>
+
+                    <div class="inferencia">
+                        <span>Arte + Creatividad</span>
+                        <span class="flecha">↓</span>
+                        <strong>Diseño</strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="tarjeta">
+                <h2>Cadena 5: Derecho</h2>
+
+                <div class="contenido">
+                    <h3>Hechos</h3>
+                    <ul>
+                        <li>Le interesa la educación.</li>
+                        <li>Tiene habilidad de comunicación.</li>
+                    </ul>
+
+                    <p class="activacion">↓ Activa Regla R9</p>
+
+                    <div class="codigo">
+                        <p><b>SI</b> interes_educacion = TRUE <b>Y</b></p>
+                        <p>habilidad_comunicacion = TRUE</p>
+                        <p><b>ENTONCES</b> recomendacion = Derecho</p>
+                    </div>
+
+                    <p class="deduccion">↓ Deduce la recomendación</p>
+
+                    <div class="inferencia">
+                        <span>Educación + Comunicación</span>
+                        <span class="flecha">↓</span>
+                        <strong>Derecho</strong>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregable 4 · Sistema de Reglas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="contenedor">
+
+        <header>
+            <h1>Entregable 4. Sistema de Reglas IF-THEN</h1>
+            <p>Razonamiento Monótono · Orientación Vocacional</p>
+        </header>
+
+        <section>
+            <h2>BASE DE CONOCIMIENTO: LAS 10 REGLAS DE PRODUCCIÓN</h2>
+
+            <div class="reglas">
+
+                <article class="regla">
+                    <h3>REGLA R1: Recomendación de Ingeniería</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_tecnologia = <em>TRUE</em> <b>Y</b></p>
+                        <p>habilidad_matematica = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Ingenieria</span></p>
+                    </div>
+                </article>
+
+                <article class="regla">
+                    <h3>REGLA R2: Recomendación de Ingeniería</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_tecnologia = <em>TRUE</em> <b>Y</b></p>
+                        <p>capacidad_analisis = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Ingenieria</span></p>
+                    </div>
+                </article>
+
+                <article class="regla">
+                    <h3>REGLA R3: Recomendación de Medicina</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_salud = <em>TRUE</em> <b>Y</b></p>
+                        <p>capacidad_analisis = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Medicina</span></p>
+                    </div>
+                </article>
+
+                <article class="regla">
+                    <h3>REGLA R4: Recomendación de Medicina</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_salud = <em>TRUE</em> <b>Y</b></p>
+                        <p>habilidad_comunicacion = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Medicina</span></p>
+                    </div>
+                </article>
+
+                <article class="regla">
+                    <h3>REGLA R5: Recomendación de Administración</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_negocios = <em>TRUE</em> <b>Y</b></p>
+                        <p>habilidad_liderazgo = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Administracion</span></p>
+                    </div>
+                </article>
+
+                <article class="regla">
+                    <h3>REGLA R6: Recomendación de Administración</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_negocios = <em>TRUE</em> <b>Y</b></p>
+                        <p>habilidad_matematica = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Administracion</span></p>
+                    </div>
+                </article>
+
+                <article class="regla">
+                    <h3>REGLA R7: Recomendación de Diseño</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_arte = <em>TRUE</em> <b>Y</b></p>
+                        <p>habilidad_creatividad = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Diseno</span></p>
+                    </div>
+                </article>
+
+                <article class="regla">
+                    <h3>REGLA R8: Recomendación de Diseño</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_arte = <em>TRUE</em> <b>Y</b></p>
+                        <p>habilidad_comunicacion = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Diseno</span></p>
+                    </div>
+                </article>
+
+                <article class="regla">
+                    <h3>REGLA R9: Recomendación de Derecho</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_educacion = <em>TRUE</em> <b>Y</b></p>
+                        <p>habilidad_comunicacion = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Derecho</span></p>
+                    </div>
+                </article>
+
+                <article class="regla">
+                    <h3>REGLA R10: Recomendación de Derecho</h3>
+                    <div class="codigo">
+                        <p><b>SI</b> interes_educacion = <em>TRUE</em> <b>Y</b></p>
+                        <p>capacidad_analisis = <em>TRUE</em></p>
+                        <p><b>ENTONCES</b> recomendacion = <span>Derecho</span></p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="casos">
+            <h2>5 CASOS DE PRUEBA CON TRAZABILIDAD COMPLETA</h2>
+
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Caso #</th>
+                            <th scope="col">Hechos iniciales (Entrada)</th>
+                            <th scope="col">Reglas activadas</th>
+                            <th scope="col">Hechos deducidos (Inferencia)</th>
+                            <th scope="col">Recomendación final</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <th scope="row">Caso 1</th>
+                            <td class="variables">
+                                <p>interes_tecnologia=<em>TRUE</em>,</p>
+                                <p>habilidad_matematica=<em>TRUE</em>,</p>
+                                <p>capacidad_analisis=<em>TRUE</em></p>
+                            </td>
+                            <td class="activadas">R1, R2</td>
+                            <td class="variables">
+                                recomendacion = <span>Ingenieria</span>
+                            </td>
+                            <td class="final">Ingeniería</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Caso 2</th>
+                            <td class="variables">
+                                <p>interes_salud=<em>TRUE</em>,</p>
+                                <p>capacidad_analisis=<em>TRUE</em>,</p>
+                                <p>habilidad_comunicacion=<em>TRUE</em></p>
+                            </td>
+                            <td class="activadas">R3, R4</td>
+                            <td class="variables">
+                                recomendacion = <span>Medicina</span>
+                            </td>
+                            <td class="final">Medicina</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Caso 3</th>
+                            <td class="variables">
+                                <p>interes_negocios=<em>TRUE</em>,</p>
+                                <p>habilidad_liderazgo=<em>TRUE</em>,</p>
+                                <p>habilidad_matematica=<em>TRUE</em></p>
+                            </td>
+                            <td class="activadas">R5, R6</td>
+                            <td class="variables">
+                                recomendacion = <span>Administracion</span>
+                            </td>
+                            <td class="final">Administración</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Caso 4</th>
+                            <td class="variables">
+                                <p>interes_arte=<em>TRUE</em>,</p>
+                                <p>habilidad_creatividad=<em>TRUE</em>,</p>
+                                <p>habilidad_comunicacion=<em>TRUE</em></p>
+                            </td>
+                            <td class="activadas">R7, R8</td>
+                            <td class="variables">
+                                recomendacion = <span>Diseno</span>
+                            </td>
+                            <td class="final">Diseño</td>
+                        </tr>
+
+                        <tr>
+                            <th scope="row">Caso 5</th>
+                            <td class="variables">
+                                <p>interes_educacion=<em>TRUE</em>,</p>
+                                <p>habilidad_comunicacion=<em>TRUE</em>,</p>
+                                <p>capacidad_analisis=<em>TRUE</em></p>
+                            </td>
+                            <td class="activadas">R9, R10</td>
+                            <td class="variables">
+                                recomendacion = <span>Derecho</span>
+                            </td>
+                            <td class="final">Derecho</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>

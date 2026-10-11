@@ -1,0 +1,375 @@
+/* =========================
+   TU PALETA
+   ========================= */
+
+:root {
+    --alice-blue: #E5EBF8;
+    --icy-aqua: #BEFFEA;
+    --plum: #F4A4F5;
+    --periwinkle: #9881FF;
+    --amethyst: #A94ACF;
+
+    --fondo: #182239;
+    --fondo-arbol: #11182B;
+}
+
+/* =========================
+   GENERAL
+   ========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    padding: 36px 24px;
+    color: var(--alice-blue);
+    background: var(--fondo);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.contenedor {
+    width: 100%;
+    max-width: 1700px;
+    margin: auto;
+}
+
+/* =========================
+   ENCABEZADO
+   ========================= */
+
+header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.etiqueta {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 9px 18px;
+
+    color: var(--icy-aqua);
+    border: 1px solid var(--periwinkle);
+    border-radius: 30px;
+
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+h1 {
+    margin-bottom: 12px;
+    font-size: clamp(27px, 4vw, 40px);
+    line-height: 1.4;
+}
+
+header p {
+    color: var(--plum);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* =========================
+   INFORMACIÓN
+   ========================= */
+
+.informacion {
+    margin-bottom: 24px;
+    padding: 22px;
+
+    background: rgba(152, 129, 255, 0.06);
+    border: 1px solid rgba(152, 129, 255, 0.4);
+    border-radius: 14px;
+}
+
+.informacion h2 {
+    margin-bottom: 12px;
+    color: var(--plum);
+    font-size: 21px;
+}
+
+.informacion p {
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.informacion p + p {
+    margin-top: 10px;
+}
+
+.informacion strong {
+    color: var(--icy-aqua);
+}
+
+/* =========================
+   PANEL DEL ÁRBOL
+   ========================= */
+
+.panel-arbol {
+    padding: 24px;
+
+    background: var(--fondo-arbol);
+    border: 1px solid rgba(152, 129, 255, 0.5);
+    border-radius: 20px;
+}
+
+.cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.cabecera h2 {
+    color: var(--periwinkle);
+    font-size: 21px;
+}
+
+.cabecera span {
+    padding: 9px 13px;
+
+    color: var(--icy-aqua);
+    border: 1px solid rgba(190, 255, 234, 0.35);
+    border-radius: 9px;
+
+    font-size: 12px;
+}
+
+.instruccion {
+    margin-top: 15px;
+    font-size: 13px;
+    line-height: 1.7;
+    opacity: 0.8;
+}
+
+.desplazamiento {
+    margin-top: 20px;
+    overflow-x: auto;
+    scrollbar-color: var(--periwinkle) var(--fondo);
+}
+
+#arbol {
+    display: block;
+    max-width: none;
+    height: auto;
+}
+
+#arbol text {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   PREGUNTAS
+   ========================= */
+
+.caja-pregunta {
+    fill: var(--fondo);
+    stroke: var(--periwinkle);
+    stroke-width: 2;
+}
+
+.identificador {
+    fill: var(--plum);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.texto-pregunta {
+    fill: var(--alice-blue);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* =========================
+   CARRERA Y OPCIÓN PROFESIONAL
+   ========================= */
+
+.caja-hoja {
+    fill: var(--amethyst);
+    stroke: var(--plum);
+    stroke-width: 2;
+}
+
+.carrera {
+    fill: var(--alice-blue);
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.profesion {
+    fill: var(--alice-blue);
+    font-size: 15px;
+    font-weight: normal;
+}
+
+/* =========================
+   RAMAS
+   ========================= */
+
+.conexion-si,
+.conexion-no {
+    fill: none;
+    stroke-width: 2.5;
+}
+
+.conexion-si {
+    stroke: var(--icy-aqua);
+}
+
+.conexion-no {
+    stroke: var(--plum);
+}
+
+#flecha-si path {
+    fill: var(--icy-aqua);
+}
+
+#flecha-no path {
+    fill: var(--plum);
+}
+
+.fondo-respuesta {
+    fill: var(--fondo-arbol);
+}
+
+.texto-si,
+.texto-no {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.texto-si {
+    fill: var(--icy-aqua);
+}
+
+.texto-no {
+    fill: var(--plum);
+}
+
+/* =========================
+   LEYENDA
+   ========================= */
+
+.leyenda {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 22px;
+
+    margin-top: 20px;
+    padding: 16px;
+
+    background: var(--fondo);
+    border-radius: 10px;
+}
+
+.leyenda span {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+}
+
+.leyenda i {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.color-pregunta {
+    background: var(--periwinkle);
+}
+
+.color-si {
+    background: var(--icy-aqua);
+}
+
+.color-no {
+    background: var(--plum);
+}
+
+.color-hoja {
+    background: var(--amethyst);
+}
+
+/* =========================
+   INVENTARIO
+   ========================= */
+
+.inventario {
+    margin-top: 26px;
+    padding: 24px;
+
+    background: rgba(152, 129, 255, 0.06);
+    border: 1px solid rgba(152, 129, 255, 0.4);
+    border-radius: 14px;
+}
+
+.inventario h2 {
+    margin-bottom: 20px;
+    color: var(--icy-aqua);
+    font-size: 21px;
+}
+
+#lista-preguntas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px 26px;
+}
+
+#lista-preguntas p {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+#lista-preguntas strong {
+    color: var(--plum);
+}
+
+/* =========================
+   ADAPTACIÓN
+   ========================= */
+
+@media (max-width: 1000px) {
+    #lista-preguntas {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    body {
+        padding: 24px 12px;
+    }
+
+    .panel-arbol,
+    .informacion,
+    .inventario {
+        padding: 18px;
+    }
+
+    #lista-preguntas {
+        grid-template-columns: 1fr;
+    }
+
+    .leyenda {
+        justify-content: flex-start;
+    }
+}
+
+/* MOSTRAR EL MAPA COMPLETO SIN DESPLAZAMIENTO */
+
+.desplazamiento {
+    width: 100%;
+    overflow: visible;
+}
+
+#arbol {
+    width: 100% !important;
+    max-width: 100%;
+    height: auto;
+}

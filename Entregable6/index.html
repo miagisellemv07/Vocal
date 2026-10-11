@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregable 6 · Árbol de Decisión Vocacional</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="contenedor">
+
+        <header>
+            <span class="etiqueta">ENTREGABLE 6</span>
+            <h1>Árbol de Decisión Vocacional</h1>
+            <p>Mecanismo de recomendación basado en preguntas</p>
+        </header>
+
+        <section class="informacion">
+            <h2>15 nodos de decisión</h2>
+            <p>
+                Sigue las respuestas desde N1 hasta una recomendación.
+                Cada hoja muestra la carrera vocacional y una opción
+                profesional relacionada con las respuestas del recorrido.
+                Las hojas terminales no se cuentan como nodos de decisión.
+            </p>
+            <p>
+                Cuando una pregunta compara dos actividades,
+                <strong>Sí</strong> indica que prefieres la primera
+                y <strong>No</strong> que prefieres la segunda.
+            </p>
+        </section>
+
+        <section class="panel-arbol">
+            <div class="cabecera">
+                <h2>Árbol de preguntas y recomendaciones</h2>
+                <span>15 preguntas · 16 hojas terminales</span>
+            </div>
+
+            <p class="instruccion">
+                Desplázate horizontalmente para observar todas las ramas.
+            </p>
+
+            <div class="desplazamiento">
+                <svg
+                    id="arbol"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-labelledby="titulo-svg descripcion-svg"
+                >
+                    <title id="titulo-svg">
+                        Árbol de decisión de orientación vocacional
+                    </title>
+                    <desc id="descripcion-svg">
+                        Quince preguntas con ramas Sí y No conducen
+                        a Ingeniería, Medicina, Administración,
+                        Diseño o Derecho.
+                    </desc>
+
+                    <defs>
+                        <marker
+                            id="flecha-si"
+                            viewBox="0 0 10 10"
+                            refX="9"
+                            refY="5"
+                            markerWidth="7"
+                            markerHeight="7"
+                            orient="auto"
+                        >
+                            <path d="M 0 0 L 10 5 L 0 10 Z"/>
+                        </marker>
+
+                        <marker
+                            id="flecha-no"
+                            viewBox="0 0 10 10"
+                            refX="9"
+                            refY="5"
+                            markerWidth="7"
+                            markerHeight="7"
+                            orient="auto"
+                        >
+                            <path d="M 0 0 L 10 5 L 0 10 Z"/>
+                        </marker>
+                    </defs>
+
+                    <g id="conexiones"></g>
+                    <g id="nodos"></g>
+                </svg>
+            </div>
+
+            <div class="leyenda">
+                <span><i class="color-pregunta"></i>Pregunta</span>
+                <span><i class="color-si"></i>Sí</span>
+                <span><i class="color-no"></i>No</span>
+                <span><i class="color-hoja"></i>Recomendación</span>
+            </div>
+        </section>
+
+        <section class="inventario">
+            <h2>Inventario de los 15 nodos de decisión</h2>
+            <div id="lista-preguntas"></div>
+        </section>
+
+    </main>
+
+    <script>
+        const NS = "http://www.w3.org/2000/svg";
+
+        function hoja(carrera, profesion) {
+            return { carrera, profesion };
+        }
+
+        const arbol = {
+            id: "N1",
+            pregunta: "¿Te gusta trabajar con tecnología?",
+
+            si: {
+                id: "N2",
+                pregunta: "¿Te gustan las matemáticas?",
+
+                si: {
+                    id: "N4",
+                    pregunta: "¿Disfrutas analizar y resolver problemas?",
+
+                    si: {
+                        id: "N8",
+                        pregunta: "¿Te gusta liderar equipos y proyectos?",
+
+                        si: hoja(
+                            "INGENIERÍA",
+                            "Ingeniero que dirige equipos y proyectos tecnológicos."
+                        ),
+
+                        no: hoja(
+                            "INGENIERÍA",
+                            "Ingeniero dedicado al análisis y desarrollo de sistemas."
+                        )
+                    },
+
+                    no: {
+                        id: "N9",
+                        pregunta: "¿Prefieres diseñar la apariencia de una aplicación en lugar de programar su funcionamiento?",
+
+                        si: hoja(
+                            "DISEÑO",
+                            "Diseñador de interfaces para aplicaciones y páginas web."
+                        ),
+
+                        no: hoja(
+                            "INGENIERÍA",
+                            "Ingeniero de software dedicado a programar aplicaciones."
+                        )
+                    }
+                },
+
+                no: {
+                    id: "N5",
+                    pregunta: "¿Te interesa el arte y la creación visual?",
+
+                    si: {
+                        id: "N10",
+                        pregunta: "¿Prefieres expresar tu creatividad con diseños originales en lugar de adaptar diseños existentes?",
+
+                        si: hoja(
+                            "DISEÑO",
+                            "Diseñador de interfaces y frontend de páginas web."
+                        ),
+
+                        no: hoja(
+                            "DISEÑO",
+                            "Diseñador de maquetación y adaptación de contenidos web."
+                        )
+                    },
+
+                    no: {
+                        id: "N11",
+                        pregunta: "¿Prefieres desarrollar soluciones tecnológicas en lugar de organizar proyectos y recursos?",
+
+                        si: hoja(
+                            "INGENIERÍA",
+                            "Ingeniero dedicado al desarrollo de soluciones tecnológicas."
+                        ),
+
+                        no: hoja(
+                            "ADMINISTRACIÓN",
+                            "Administrador de proyectos y servicios tecnológicos."
+                        )
+                    }
+                }
+            },
+
+            no: {
+                id: "N3",
+                pregunta: "¿Te interesa ayudar a las personas en el área de salud?",
+
+                si: {
+                    id: "N6",
+                    pregunta: "¿Tienes capacidad de análisis?",
+
+                    si: {
+                        id: "N12",
+                        pregunta: "¿Te gusta comunicarte directamente con las personas?",
+
+                        si: hoja(
+                            "MEDICINA",
+                            "Médico dedicado a la atención y orientación de pacientes."
+                        ),
+
+                        no: hoja(
+                            "MEDICINA",
+                            "Médico dedicado a la investigación y al análisis clínico."
+                        )
+                    },
+
+                    no: {
+                        id: "N13",
+                        pregunta: "¿Prefieres atender pacientes en lugar de organizar los servicios de salud?",
+
+                        si: hoja(
+                            "MEDICINA",
+                            "Médico enfocado en la atención de pacientes."
+                        ),
+
+                        no: hoja(
+                            "ADMINISTRACIÓN",
+                            "Administrador de hospitales y servicios de salud."
+                        )
+                    }
+                },
+
+                no: {
+                    id: "N7",
+                    pregunta: "¿Te interesan los negocios?",
+
+                    si: {
+                        id: "N14",
+                        pregunta: "¿Prefieres dirigir empresas en lugar de asesorarlas en asuntos legales?",
+
+                        si: hoja(
+                            "ADMINISTRACIÓN",
+                            "Administrador de empresas y coordinador de equipos."
+                        ),
+
+                        no: hoja(
+                            "DERECHO",
+                            "Abogado dedicado a la asesoría empresarial y mercantil."
+                        )
+                    },
+
+                    no: {
+                        id: "N15",
+                        pregunta: "¿Prefieres comunicar ideas mediante imágenes en lugar de analizar normas y argumentos?",
+
+                        si: hoja(
+                            "DISEÑO",
+                            "Diseñador de comunicación visual y materiales educativos."
+                        ),
+
+                        no: hoja(
+                            "DERECHO",
+                            "Abogado dedicado al análisis de normas y argumentación jurídica."
+                        )
+                    }
+                }
+            }
+        };
+
+        const medidas = {
+            margen: 175,
+            espacioHojas: 290,
+            espacioVertical: 245,
+            preguntaAncho: 480,
+            preguntaAlto: 140,
+            hojaAncho: 270,
+            hojaAlto: 160
+        };
+
+        const preguntas = [];
+        let numeroHoja = 0;
+
+        function crearSVG(tipo, atributos = {}) {
+            const elemento = document.createElementNS(NS, tipo);
+
+            Object.entries(atributos).forEach(([nombre, valor]) => {
+                elemento.setAttribute(nombre, valor);
+            });
+
+            return elemento;
+        }
+
+        function posicionar(nodo, nivel = 0) {
+            nodo.y = 105 + nivel * medidas.espacioVertical;
+
+            if (!nodo.id) {
+                nodo.x = medidas.margen +
+                    numeroHoja * medidas.espacioHojas;
+
+                numeroHoja++;
+                return;
+            }
+
+            preguntas.push(nodo);
+
+            posicionar(nodo.si, nivel + 1);
+            posicionar(nodo.no, nivel + 1);
+
+            nodo.x = (nodo.si.x + nodo.no.x) / 2;
+        }
+
+        function dividirTexto(texto, limite) {
+            const lineas = [];
+            let linea = "";
+
+            texto.split(" ").forEach(palabra => {
+                const propuesta = linea
+                    ? `${linea} ${palabra}`
+                    : palabra;
+
+                if (linea && propuesta.length > limite) {
+                    lineas.push(linea);
+                    linea = palabra;
+                } else {
+                    linea = propuesta;
+                }
+            });
+
+            if (linea) lineas.push(linea);
+            return lineas;
+        }
+
+        function agregarTexto(
+            grupo, contenido, x, centroY, limite, clase, interlineado
+        ) {
+            const lineas = dividirTexto(contenido, limite);
+
+            const texto = crearSVG("text", {
+                x,
+                y: centroY -
+                    ((lineas.length - 1) * interlineado) / 2,
+                class: clase,
+                "text-anchor": "middle",
+                "dominant-baseline": "middle"
+            });
+
+            lineas.forEach((linea, indice) => {
+                const fragmento = crearSVG("tspan", {
+                    x,
+                    dy: indice === 0 ? 0 : interlineado
+                });
+
+                fragmento.textContent = linea;
+                texto.appendChild(fragmento);
+            });
+
+            grupo.appendChild(texto);
+        }
+
+        function conectar(origen, destino, respuesta) {
+            const esSi = respuesta === "Sí";
+            const inicioY = origen.y + medidas.preguntaAlto / 2;
+
+            const finalY = destino.y -
+                (destino.id ? medidas.preguntaAlto : medidas.hojaAlto) / 2;
+
+            const grupo = document.getElementById("conexiones");
+
+            grupo.appendChild(crearSVG("path", {
+                d: `M ${origen.x} ${inicioY} L ${destino.x} ${finalY}`,
+                class: esSi ? "conexion-si" : "conexion-no",
+                "marker-end": esSi
+                    ? "url(#flecha-si)"
+                    : "url(#flecha-no)"
+            }));
+
+            const proporcion = 0.65;
+            const x = origen.x +
+                (destino.x - origen.x) * proporcion;
+
+            const y = inicioY +
+                (finalY - inicioY) * proporcion;
+
+            grupo.appendChild(crearSVG("rect", {
+                x: x - 25,
+                y: y - 17,
+                width: 50,
+                height: 34,
+                rx: 8,
+                class: "fondo-respuesta"
+            }));
+
+            agregarTexto(
+                grupo,
+                respuesta,
+                x,
+                y,
+                5,
+                esSi ? "texto-si" : "texto-no",
+                20
+            );
+        }
+
+        function dibujar(nodo) {
+            const grupo = crearSVG("g");
+            const esPregunta = Boolean(nodo.id);
+
+            const ancho = esPregunta
+                ? medidas.preguntaAncho
+                : medidas.hojaAncho;
+
+            const alto = esPregunta
+                ? medidas.preguntaAlto
+                : medidas.hojaAlto;
+
+            const descripcion = crearSVG("title");
+            descripcion.textContent = esPregunta
+                ? `[${nodo.id}] ${nodo.pregunta}`
+                : `${nodo.carrera}: ${nodo.profesion}`;
+
+            grupo.appendChild(descripcion);
+
+            grupo.appendChild(crearSVG("rect", {
+                x: nodo.x - ancho / 2,
+                y: nodo.y - alto / 2,
+                width: ancho,
+                height: alto,
+                rx: 15,
+                class: esPregunta ? "caja-pregunta" : "caja-hoja"
+            }));
+
+            if (esPregunta) {
+                agregarTexto(
+                    grupo,
+                    `[${nodo.id}]`,
+                    nodo.x,
+                    nodo.y - 47,
+                    10,
+                    "identificador",
+                    22
+                );
+
+                agregarTexto(
+                    grupo,
+                    nodo.pregunta,
+                    nodo.x,
+                    nodo.y + 14,
+                    47,
+                    "texto-pregunta",
+                    23
+                );
+
+                conectar(nodo, nodo.si, "Sí");
+                conectar(nodo, nodo.no, "No");
+
+            } else {
+                agregarTexto(
+                    grupo,
+                    nodo.carrera,
+                    nodo.x,
+                    nodo.y - 42,
+                    25,
+                    "carrera",
+                    28
+                );
+
+                agregarTexto(
+                    grupo,
+                    nodo.profesion,
+                    nodo.x,
+                    nodo.y + 20,
+                    31,
+                    "profesion",
+                    20
+                );
+            }
+
+            document.getElementById("nodos").appendChild(grupo);
+
+            if (esPregunta) {
+                dibujar(nodo.si);
+                dibujar(nodo.no);
+            }
+        }
+
+        posicionar(arbol);
+
+        const anchoTotal = medidas.margen * 2 +
+            (numeroHoja - 1) * medidas.espacioHojas;
+
+        const svg = document.getElementById("arbol");
+        svg.setAttribute("viewBox", `0 0 ${anchoTotal} 1190`);
+        svg.style.width = `${anchoTotal}px`;
+
+        dibujar(arbol);
+
+        preguntas
+            .sort((a, b) =>
+                Number(a.id.slice(1)) - Number(b.id.slice(1))
+            )
+            .forEach(nodo => {
+                const elemento = document.createElement("p");
+                const identificador = document.createElement("strong");
+
+                identificador.textContent = `[${nodo.id}] `;
+                elemento.append(identificador, nodo.pregunta);
+
+                document.getElementById("lista-preguntas")
+                    .appendChild(elemento);
+            });
+    </script>
+</body>
+</html>
