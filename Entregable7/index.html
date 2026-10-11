@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregable 7 · Conocimiento No-Monótono</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="contenedor">
+        <header class="encabezado">
+            <span class="etiqueta">VOCA-IA · ENTREGABLE 7</span>
+            <h1>Conocimiento No-Monótono</h1>
+            <p>Manejo de excepciones y revisión de recomendaciones vocacionales</p>
+            <span class="contador">5 excepciones completas</span>
+        </header>
+
+        <section class="fundamento">
+            <h2>¿Qué significa razonamiento no-monótono?</h2>
+            <p>
+                Una recomendación inicial puede revisarse cuando aparece nueva
+                información que contradice sus condiciones. El sistema retira
+                la conclusión anterior y utiliza los hechos actuales para
+                generar una nueva recomendación.
+            </p>
+            <p>
+                En estos casos, las recomendaciones son provisionales:
+                una respuesta corregida reemplaza el valor anterior de la
+                misma variable.
+            </p>
+        </section>
+
+        <section class="base">
+            <div class="titulo-seccion">
+                <h2>Las 5 excepciones vocacionales</h2>
+                <span>Revisión de creencias</span>
+            </div>
+
+            <div class="excepciones">
+
+                <article class="tarjeta">
+                    <div class="cabecera">
+                        <h3>Excepción 1: Ingeniería → Diseño</h3>
+                        <span class="insignia">Retractación</span>
+                    </div>
+
+                    <div class="contenido">
+                        <div class="bloque regla">
+                            <h4>Regla general · R1</h4>
+                            <pre>SI interes_tecnologia = TRUE
+Y habilidad_matematica = TRUE
+ENTONCES recomendacion = Ingenieria</pre>
+                        </div>
+
+                        <div class="bloque evidencia">
+                            <h4>Nueva evidencia</h4>
+                            <p>
+                                El estudiante aclara que no le interesa la
+                                tecnología; le interesan el arte y la creación visual.
+                            </p>
+                            <pre>interes_tecnologia = FALSE
+interes_arte = TRUE
+habilidad_creatividad = TRUE</pre>
+                        </div>
+
+                        <div class="bloque justificacion">
+                            <h4>Justificación</h4>
+                            <p>
+                                R1 pierde una de sus condiciones. Las habilidades
+                                matemáticas se conservan, pero ya no sostienen
+                                esa recomendación mediante R1. Los nuevos
+                                hechos activan R7.
+                            </p>
+                        </div>
+
+                        <div class="bloque retirada">
+                            <h4>Conclusión retirada</h4>
+                            <pre>RETRACTAR recomendacion = Ingenieria</pre>
+                        </div>
+
+                        <div class="bloque nueva">
+                            <h4>Nueva conclusión · R7</h4>
+                            <pre>SI interes_arte = TRUE
+Y habilidad_creatividad = TRUE
+ENTONCES recomendacion = Diseno</pre>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta">
+                    <div class="cabecera">
+                        <h3>Excepción 2: Medicina → Ingeniería</h3>
+                        <span class="insignia">Retractación</span>
+                    </div>
+
+                    <div class="contenido">
+                        <div class="bloque regla">
+                            <h4>Regla general · R3</h4>
+                            <pre>SI interes_salud = TRUE
+Y capacidad_analisis = TRUE
+ENTONCES recomendacion = Medicina</pre>
+                        </div>
+
+                        <div class="bloque evidencia">
+                            <h4>Nueva evidencia</h4>
+                            <p>
+                                El estudiante aclara que no desea trabajar en
+                                salud y prefiere resolver problemas tecnológicos.
+                            </p>
+                            <pre>interes_salud = FALSE
+interes_tecnologia = TRUE</pre>
+                        </div>
+
+                        <div class="bloque justificacion">
+                            <h4>Justificación</h4>
+                            <p>
+                                R3 deja de cumplirse al corregirse el interés
+                                en salud. La capacidad de análisis permanece
+                                y, junto con el interés tecnológico, activa R2.
+                            </p>
+                        </div>
+
+                        <div class="bloque retirada">
+                            <h4>Conclusión retirada</h4>
+                            <pre>RETRACTAR recomendacion = Medicina</pre>
+                        </div>
+
+                        <div class="bloque nueva">
+                            <h4>Nueva conclusión · R2</h4>
+                            <pre>SI interes_tecnologia = TRUE
+Y capacidad_analisis = TRUE
+ENTONCES recomendacion = Ingenieria</pre>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta">
+                    <div class="cabecera">
+                        <h3>Excepción 3: Administración → Derecho</h3>
+                        <span class="insignia">Retractación</span>
+                    </div>
+
+                    <div class="contenido">
+                        <div class="bloque regla">
+                            <h4>Regla general · R5</h4>
+                            <pre>SI interes_negocios = TRUE
+Y habilidad_liderazgo = TRUE
+ENTONCES recomendacion = Administracion</pre>
+                        </div>
+
+                        <div class="bloque evidencia">
+                            <h4>Nueva evidencia</h4>
+                            <p>
+                                El estudiante aclara que no le interesan los
+                                negocios. Manifiesta interés en educación
+                                y habilidad para comunicarse.
+                            </p>
+                            <pre>interes_negocios = FALSE
+interes_educacion = TRUE
+habilidad_comunicacion = TRUE</pre>
+                        </div>
+
+                        <div class="bloque justificacion">
+                            <h4>Justificación</h4>
+                            <p>
+                                El liderazgo se conserva, pero R5 pierde la
+                                condición de interés en negocios. De acuerdo
+                                con la base vocacional del proyecto, los
+                                nuevos hechos activan R9.
+                            </p>
+                        </div>
+
+                        <div class="bloque retirada">
+                            <h4>Conclusión retirada</h4>
+                            <pre>RETRACTAR recomendacion = Administracion</pre>
+                        </div>
+
+                        <div class="bloque nueva">
+                            <h4>Nueva conclusión · R9</h4>
+                            <pre>SI interes_educacion = TRUE
+Y habilidad_comunicacion = TRUE
+ENTONCES recomendacion = Derecho</pre>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta">
+                    <div class="cabecera">
+                        <h3>Excepción 4: Diseño → Administración</h3>
+                        <span class="insignia">Retractación</span>
+                    </div>
+
+                    <div class="contenido">
+                        <div class="bloque regla">
+                            <h4>Regla general · R7</h4>
+                            <pre>SI interes_arte = TRUE
+Y habilidad_creatividad = TRUE
+ENTONCES recomendacion = Diseno</pre>
+                        </div>
+
+                        <div class="bloque evidencia">
+                            <h4>Nueva evidencia</h4>
+                            <p>
+                                El estudiante aclara que su creatividad se
+                                orienta a los negocios y que no tiene interés
+                                en el arte. También posee habilidad de liderazgo.
+                            </p>
+                            <pre>interes_arte = FALSE
+interes_negocios = TRUE
+habilidad_liderazgo = TRUE</pre>
+                        </div>
+
+                        <div class="bloque justificacion">
+                            <h4>Justificación</h4>
+                            <p>
+                                La creatividad permanece, pero el interés en
+                                arte deja de respaldar R7. El interés en
+                                negocios y el liderazgo activan R5.
+                            </p>
+                        </div>
+
+                        <div class="bloque retirada">
+                            <h4>Conclusión retirada</h4>
+                            <pre>RETRACTAR recomendacion = Diseno</pre>
+                        </div>
+
+                        <div class="bloque nueva">
+                            <h4>Nueva conclusión · R5</h4>
+                            <pre>SI interes_negocios = TRUE
+Y habilidad_liderazgo = TRUE
+ENTONCES recomendacion = Administracion</pre>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="tarjeta tarjeta-amplia">
+                    <div class="cabecera">
+                        <h3>Excepción 5: Derecho → Medicina</h3>
+                        <span class="insignia">Retractación</span>
+                    </div>
+
+                    <div class="contenido">
+                        <div class="bloque regla">
+                            <h4>Regla general · R9</h4>
+                            <pre>SI interes_educacion = TRUE
+Y habilidad_comunicacion = TRUE
+ENTONCES recomendacion = Derecho</pre>
+                        </div>
+
+                        <div class="bloque evidencia">
+                            <h4>Nueva evidencia</h4>
+                            <p>
+                                El estudiante corrige su respuesta: no tiene
+                                interés en educación y desea comunicarse con
+                                las personas para ayudarlas en el área de salud.
+                            </p>
+                            <pre>interes_educacion = FALSE
+interes_salud = TRUE</pre>
+                        </div>
+
+                        <div class="bloque justificacion">
+                            <h4>Justificación</h4>
+                            <p>
+                                R9 pierde el interés en educación como condición.
+                                La habilidad de comunicación se conserva y,
+                                junto con el interés en salud, activa R4.
+                            </p>
+                        </div>
+
+                        <div class="bloque retirada">
+                            <h4>Conclusión retirada</h4>
+                            <pre>RETRACTAR recomendacion = Derecho</pre>
+                        </div>
+
+                        <div class="bloque nueva">
+                            <h4>Nueva conclusión · R4</h4>
+                            <pre>SI interes_salud = TRUE
+Y habilidad_comunicacion = TRUE
+ENTONCES recomendacion = Medicina</pre>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+</body>
+</html>
