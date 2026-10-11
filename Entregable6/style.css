@@ -361,15 +361,3 @@ header p {
     }
 }
 
-/* MOSTRAR EL MAPA COMPLETO SIN DESPLAZAMIENTO */
-
-.desplazamiento {
-    width: 100%;
-    overflow: visible;
-}
-
-#arbol {
-    width: 100% !important;
-    max-width: 100%;
-    height: auto;
-}
