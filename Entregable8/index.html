@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregable 8 · Razonamiento Probabilístico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="contenedor">
+
+    <header>
+        <span class="etiqueta">VOCA-IA · ENTREGABLE 8</span>
+        <h1>Razonamiento Probabilístico</h1>
+        <p>Estimación de afinidad profesional mediante factores de certeza</p>
+        <span class="contador">5 casos con factores de certeza</span>
+    </header>
+
+    <section class="fundamento">
+        <h2>Modelo matemático: factores de certeza (CF)</h2>
+
+        <p>
+            Cuando dos evidencias distintas apoyan la misma carrera,
+            sus factores positivos se combinan mediante:
+        </p>
+
+        <div class="formula">
+            CF_combinado = CF₁ + CF₂ × (1 − CF₁)
+        </div>
+
+        <p>
+            Para tres o más evidencias, el resultado anterior se combina
+            con el siguiente factor. Se recomienda la carrera con el
+            mayor CF acumulado.
+        </p>
+
+        <p class="nota">
+            Los valores son pesos ilustrativos del ejercicio.
+            El porcentaje expresa un índice de certeza del modelo,
+            no una probabilidad estadística validada de éxito profesional.
+        </p>
+    </section>
+
+    <section class="panel">
+        <h2>Tabla de evidencias y factores de certeza base</h2>
+
+        <p class="descripcion">
+            Se utilizan los vínculos directos entre intereses y carreras,
+            y las habilidades que cada carrera requiere en nuestra base.
+            Cada evidencia se cuenta una sola vez por carrera.
+        </p>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Característica observable</th>
+                        <th>Variable</th>
+                        <th>CF base</th>
+                        <th>Carreras apoyadas</th>
+                        <th>Justificación vocacional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Interés en tecnología</td>
+                        <td><code>interes_tecnologia</code></td>
+                        <td class="valor">0.85</td>
+                        <td>Ingeniería</td>
+                        <td>Tecnología se relaciona con Ingeniería.</td>
+                    </tr>
+                    <tr>
+                        <td>Habilidad matemática</td>
+                        <td><code>habilidad_matematica</code></td>
+                        <td class="valor">0.80</td>
+                        <td>Ingeniería / Administración</td>
+                        <td>Ambas carreras requieren Matemáticas.</td>
+                    </tr>
+                    <tr>
+                        <td>Capacidad de análisis</td>
+                        <td><code>capacidad_analisis</code></td>
+                        <td class="valor">0.75</td>
+                        <td>Ingeniería / Medicina / Derecho</td>
+                        <td>Las tres carreras requieren Análisis.</td>
+                    </tr>
+                    <tr>
+                        <td>Habilidad de comunicación</td>
+                        <td><code>habilidad_comunicacion</code></td>
+                        <td class="valor">0.70</td>
+                        <td>Medicina / Diseño / Derecho</td>
+                        <td>Las tres carreras requieren Comunicación.</td>
+                    </tr>
+                    <tr>
+                        <td>Creatividad</td>
+                        <td><code>habilidad_creatividad</code></td>
+                        <td class="valor">0.65</td>
+                        <td>Diseño / Administración</td>
+                        <td>Ambas carreras requieren Creatividad.</td>
+                    </tr>
+                    <tr>
+                        <td>Liderazgo</td>
+                        <td><code>habilidad_liderazgo</code></td>
+                        <td class="valor">0.60</td>
+                        <td>Administración</td>
+                        <td>Administración requiere Liderazgo.</td>
+                    </tr>
+                    <tr>
+                        <td>Interés en salud</td>
+                        <td><code>interes_salud</code></td>
+                        <td class="valor">0.85</td>
+                        <td>Medicina</td>
+                        <td>Salud se relaciona con Medicina.</td>
+                    </tr>
+                    <tr>
+                        <td>Interés en negocios</td>
+                        <td><code>interes_negocios</code></td>
+                        <td class="valor">0.85</td>
+                        <td>Administración</td>
+                        <td>Negocios se relaciona con Administración.</td>
+                    </tr>
+                    <tr>
+                        <td>Interés en arte</td>
+                        <td><code>interes_arte</code></td>
+                        <td class="valor">0.85</td>
+                        <td>Diseño</td>
+                        <td>Arte se relaciona con Diseño.</td>
+                    </tr>
+                    <tr>
+                        <td>Interés en educación</td>
+                        <td><code>interes_educacion</code></td>
+                        <td class="valor">0.85</td>
+                        <td>Derecho</td>
+                        <td>Educación se relaciona con Derecho en nuestra base.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="nota">
+            Las características no informadas no aportan evidencia.
+            Un CF de 0 significa ausencia de apoyo registrado,
+            no rechazo de la carrera.
+        </p>
+    </section>
+
+    <section class="panel">
+        <h2>Resolución de los cinco casos</h2>
+
+        <div class="casos">
+
+            <article class="caso">
+                <h3>Caso 1: Tecnología y matemáticas</h3>
+
+                <h4>Hechos iniciales</h4>
+                <pre>interes_tecnologia = TRUE
+habilidad_matematica = TRUE</pre>
+
+                <p>
+                    Ingeniería recibe dos apoyos:
+                    tecnología (0.85) y matemáticas (0.80).
+                </p>
+
+                <div class="calculo">
+                    <pre>CF_Ingenieria
+= 0.85 + 0.80 × (1 − 0.85)
+= 0.85 + 0.12
+= 0.9700</pre>
+                </div>
+
+                <p class="comparacion">
+                    Comparación: Ingeniería 0.9700;
+                    Administración 0.8000;
+                    Medicina, Diseño y Derecho 0.
+                </p>
+
+                <div class="resultado">
+                    <span>Mayor afinidad</span>
+                    <strong>INGENIERÍA</strong>
+                    <b>97.00% de certeza del modelo</b>
+                </div>
+            </article>
+
+            <article class="caso">
+                <h3>Caso 2: Salud y análisis</h3>
+
+                <h4>Hechos iniciales</h4>
+                <pre>interes_salud = TRUE
+capacidad_analisis = TRUE</pre>
+
+                <p>
+                    Medicina recibe dos apoyos:
+                    salud (0.85) y análisis (0.75).
+                </p>
+
+                <div class="calculo">
+                    <pre>CF_Medicina
+= 0.85 + 0.75 × (1 − 0.85)
+= 0.85 + 0.1125
+= 0.9625</pre>
+                </div>
+
+                <p class="comparacion">
+                    Comparación: Medicina 0.9625;
+                    Ingeniería y Derecho 0.7500;
+                    Administración y Diseño 0.
+                </p>
+
+                <div class="resultado">
+                    <span>Mayor afinidad</span>
+                    <strong>MEDICINA</strong>
+                    <b>96.25% de certeza del modelo</b>
+                </div>
+            </article>
+
+            <article class="caso">
+                <h3>Caso 3: Negocios y liderazgo</h3>
+
+                <h4>Hechos iniciales</h4>
+                <pre>interes_negocios = TRUE
+habilidad_liderazgo = TRUE</pre>
+
+                <p>
+                    Administración recibe dos apoyos:
+                    negocios (0.85) y liderazgo (0.60).
+                </p>
+
+                <div class="calculo">
+                    <pre>CF_Administracion
+= 0.85 + 0.60 × (1 − 0.85)
+= 0.85 + 0.09
+= 0.9400</pre>
+                </div>
+
+                <p class="comparacion">
+                    Comparación: Administración 0.9400;
+                    Ingeniería, Medicina, Diseño y Derecho 0.
+                </p>
+
+                <div class="resultado">
+                    <span>Mayor afinidad</span>
+                    <strong>ADMINISTRACIÓN</strong>
+                    <b>94.00% de certeza del modelo</b>
+                </div>
+            </article>
+
+            <article class="caso">
+                <h3>Caso 4: Arte, creatividad y comunicación</h3>
+
+                <h4>Hechos iniciales</h4>
+                <pre>interes_arte = TRUE
+habilidad_creatividad = TRUE
+habilidad_comunicacion = TRUE</pre>
+
+                <p>
+                    Diseño recibe tres apoyos:
+                    arte (0.85), creatividad (0.65)
+                    y comunicación (0.70).
+                </p>
+
+                <div class="calculo">
+                    <pre>CF_parcial
+= 0.85 + 0.65 × (1 − 0.85)
+= 0.9475
+
+CF_Diseno
+= 0.9475 + 0.70 × (1 − 0.9475)
+= 0.9475 + 0.03675
+= 0.98425</pre>
+                </div>
+
+                <p class="comparacion">
+                    Comparación: Diseño 0.98425;
+                    Medicina y Derecho 0.7000;
+                    Administración 0.6500;
+                    Ingeniería 0.
+                </p>
+
+                <div class="resultado">
+                    <span>Mayor afinidad</span>
+                    <strong>DISEÑO</strong>
+                    <b>98.43% de certeza del modelo</b>
+                </div>
+            </article>
+
+            <article class="caso caso-amplio">
+                <h3>Caso 5: Educación y comunicación</h3>
+
+                <h4>Hechos iniciales</h4>
+                <pre>interes_educacion = TRUE
+habilidad_comunicacion = TRUE</pre>
+
+                <p>
+                    Derecho recibe dos apoyos según nuestra base:
+                    educación (0.85) y comunicación (0.70).
+                </p>
+
+                <div class="calculo">
+                    <pre>CF_Derecho
+= 0.85 + 0.70 × (1 − 0.85)
+= 0.85 + 0.105
+= 0.9550</pre>
+                </div>
+
+                <p class="comparacion">
+                    Comparación: Derecho 0.9550;
+                    Medicina y Diseño 0.7000;
+                    Ingeniería y Administración 0.
+                </p>
+
+                <div class="resultado">
+                    <span>Mayor afinidad</span>
+                    <strong>DERECHO</strong>
+                    <b>95.50% de certeza del modelo</b>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+</main>
+</body>
+</html>

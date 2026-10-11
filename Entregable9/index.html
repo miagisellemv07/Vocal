@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregable 9 · Teorema de Bayes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<main class="contenedor">
+
+    <header class="encabezado">
+        <span class="etiqueta">VOCA-IA · ENTREGABLE 9</span>
+        <h1>Aplicación del Teorema de Bayes</h1>
+        <p>Actualización de probabilidades de afinidad profesional</p>
+        <span class="contador">5 casos resueltos</span>
+    </header>
+
+    <section class="fundamento">
+        <h2>Fundamento teórico: inferencia bayesiana</h2>
+
+        <p>
+            El Teorema de Bayes permite actualizar la probabilidad
+            de una hipótesis H al conocer una evidencia E.
+            En estos casos, H representa la afinidad con una carrera
+            y E una característica del estudiante.
+        </p>
+
+        <div class="formula-general">
+            <span>P(H | E) =</span>
+            <span class="fraccion">
+                <span>P(E | H) × P(H)</span>
+                <span>P(E)</span>
+            </span>
+        </div>
+
+        <div class="definiciones">
+            <p>
+                <strong>P(H):</strong>
+                probabilidad inicial de afinidad con la carrera.
+            </p>
+            <p>
+                <strong>P(E | H):</strong>
+                probabilidad de presentar la característica
+                entre quienes tienen afinidad con esa carrera.
+            </p>
+            <p>
+                <strong>P(E):</strong>
+                probabilidad de presentar la característica
+                en la población considerada.
+            </p>
+            <p>
+                <strong>P(H | E):</strong>
+                probabilidad actualizada de afinidad con la
+                carrera al observar la característica.
+            </p>
+        </div>
+
+        <p class="nota">
+            Los cálculos utilizan los valores proporcionados en
+            la actividad. Cada caso se evalúa por separado.
+        </p>
+    </section>
+
+    <section class="panel">
+        <h2>Resolución de los cinco casos</h2>
+
+        <div class="casos">
+
+            <!-- CASO 1 -->
+            <article class="caso">
+                <div class="cabecera-caso">
+                    <h3>Caso 1. Ingeniería</h3>
+                    <span>Matemáticas</span>
+                </div>
+
+                <h4>Datos iniciales</h4>
+                <pre>P(Ingeniería) = 0.25
+P(Matemáticas | Ingeniería) = 0.90
+P(Matemáticas) = 0.40</pre>
+
+                <h4>Probabilidad que se desea calcular</h4>
+                <pre>P(Ingeniería | Matemáticas)</pre>
+
+                <div class="calculo">
+                    <h4>Sustitución y cálculo</h4>
+                    <pre>P(Ingeniería | Matemáticas)
+= (0.90 × 0.25) / 0.40
+= 0.225 / 0.40
+= 0.5625</pre>
+                </div>
+
+                <div class="resultado">
+                    <span>Probabilidad posterior</span>
+                    <strong>56.25%</strong>
+                    <b>INGENIERÍA</b>
+                </div>
+
+                <p class="interpretacion">
+                    <strong>Interpretación:</strong>
+                    al observar la habilidad matemática,
+                    la probabilidad de afinidad con Ingeniería
+                    aumenta del 25.00% al 56.25%.
+                </p>
+            </article>
+
+            <!-- CASO 2 -->
+            <article class="caso">
+                <div class="cabecera-caso">
+                    <h3>Caso 2. Medicina</h3>
+                    <span>Ciencias</span>
+                </div>
+
+                <h4>Datos iniciales</h4>
+                <pre>P(Medicina) = 0.15
+P(Ciencias | Medicina) = 0.95
+P(Ciencias) = 0.35</pre>
+
+                <h4>Probabilidad que se desea calcular</h4>
+                <pre>P(Medicina | Ciencias)</pre>
+
+                <div class="calculo">
+                    <h4>Sustitución y cálculo</h4>
+                    <pre>P(Medicina | Ciencias)
+= (0.95 × 0.15) / 0.35
+= 0.1425 / 0.35
+≈ 0.407143</pre>
+                </div>
+
+                <div class="resultado">
+                    <span>Probabilidad posterior</span>
+                    <strong>40.71%</strong>
+                    <b>MEDICINA</b>
+                </div>
+
+                <p class="interpretacion">
+                    <strong>Interpretación:</strong>
+                    al observar el interés en ciencias,
+                    la probabilidad de afinidad con Medicina
+                    aumenta del 15.00% al 40.71%.
+                </p>
+            </article>
+
+            <!-- CASO 3 -->
+            <article class="caso">
+                <div class="cabecera-caso">
+                    <h3>Caso 3. Administración</h3>
+                    <span>Liderazgo</span>
+                </div>
+
+                <h4>Datos iniciales</h4>
+                <pre>P(Administración) = 0.20
+P(Liderazgo | Administración) = 0.80
+P(Liderazgo) = 0.45</pre>
+
+                <h4>Probabilidad que se desea calcular</h4>
+                <pre>P(Administración | Liderazgo)</pre>
+
+                <div class="calculo">
+                    <h4>Sustitución y cálculo</h4>
+                    <pre>P(Administración | Liderazgo)
+= (0.80 × 0.20) / 0.45
+= 0.16 / 0.45
+≈ 0.355556</pre>
+                </div>
+
+                <div class="resultado">
+                    <span>Probabilidad posterior</span>
+                    <strong>35.56%</strong>
+                    <b>ADMINISTRACIÓN</b>
+                </div>
+
+                <p class="interpretacion">
+                    <strong>Interpretación:</strong>
+                    al observar la habilidad de liderazgo,
+                    la probabilidad de afinidad con Administración
+                    aumenta del 20.00% al 35.56%.
+                </p>
+            </article>
+
+            <!-- CASO 4 -->
+            <article class="caso">
+                <div class="cabecera-caso">
+                    <h3>Caso 4. Diseño</h3>
+                    <span>Creatividad</span>
+                </div>
+
+                <h4>Datos iniciales</h4>
+                <pre>P(Diseño) = 0.10
+P(Creatividad | Diseño) = 0.95
+P(Creatividad) = 0.30</pre>
+
+                <h4>Probabilidad que se desea calcular</h4>
+                <pre>P(Diseño | Creatividad)</pre>
+
+                <div class="calculo">
+                    <h4>Sustitución y cálculo</h4>
+                    <pre>P(Diseño | Creatividad)
+= (0.95 × 0.10) / 0.30
+= 0.095 / 0.30
+≈ 0.316667</pre>
+                </div>
+
+                <div class="resultado">
+                    <span>Probabilidad posterior</span>
+                    <strong>31.67%</strong>
+                    <b>DISEÑO</b>
+                </div>
+
+                <p class="interpretacion">
+                    <strong>Interpretación:</strong>
+                    al observar la creatividad,
+                    la probabilidad de afinidad con Diseño
+                    aumenta del 10.00% al 31.67%.
+                </p>
+            </article>
+
+            <!-- CASO 5 -->
+            <article class="caso caso-amplio">
+                <div class="cabecera-caso">
+                    <h3>Caso 5. Derecho</h3>
+                    <span>Comunicación</span>
+                </div>
+
+                <h4>Datos iniciales</h4>
+                <pre>P(Derecho) = 0.12
+P(Comunicación | Derecho) = 0.85
+P(Comunicación) = 0.28</pre>
+
+                <h4>Probabilidad que se desea calcular</h4>
+                <pre>P(Derecho | Comunicación)</pre>
+
+                <div class="calculo">
+                    <h4>Sustitución y cálculo</h4>
+                    <pre>P(Derecho | Comunicación)
+= (0.85 × 0.12) / 0.28
+= 0.102 / 0.28
+≈ 0.364286</pre>
+                </div>
+
+                <div class="resultado">
+                    <span>Probabilidad posterior</span>
+                    <strong>36.43%</strong>
+                    <b>DERECHO</b>
+                </div>
+
+                <p class="interpretacion">
+                    <strong>Interpretación:</strong>
+                    al observar la habilidad de comunicación,
+                    la probabilidad de afinidad con Derecho
+                    aumenta del 12.00% al 36.43%.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+</main>
+</body>
+</html>
